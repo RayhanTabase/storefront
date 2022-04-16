@@ -1,16 +1,19 @@
 import React, { Component} from 'react';
-import { ApolloProvider } from "@apollo/client";
-import client from './Apollo';
-// import AppRoutes from './routes/routes';
+import { BrowserRouter } from 'react-router-dom';
+import AppRoutes from './routes/routes';
 import Header from './Components/Header/Header';
 
+
 class App extends Component {
+
   render() {
     return (
-      <ApolloProvider client={client}>
+    <BrowserRouter>
+      <div>
         <Header />
-          {/* <AppRoutes /> */}
-      </ApolloProvider>
+        <AppRoutes />
+      </div>
+    </BrowserRouter>
     )
   }
 }

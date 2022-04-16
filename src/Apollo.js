@@ -9,41 +9,6 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-export const getProductsCategory = gql`
-{ 
-  category(input:{title:"all"}){
-    name,
-    products {
-      id,
-      name,
-      inStock,
-      gallery,
-      description,
-      category,
-      attributes{
-        id,
-        name,
-        type,
-        items {
-          displayValue,
-          value,
-          id
-        }
-      },
-      prices{
-        currency{
-          label,
-          symbol
-        },
-        amount
-      },
-      brand
-    }
-  }
-}
-`
-
-
 export const categoriesPageDisplay = gql`
 { 
   category(input:{title:"all"}){
@@ -63,7 +28,6 @@ export const categoriesPageDisplay = gql`
   }
 }
 `
-
 
 export const getProductSingle = gql`
 { 
@@ -125,7 +89,6 @@ export const getCartItems = gql`
   }
 }
 `
-
 export const getCurrencies = gql`
 { 
   currencies {
@@ -134,5 +97,31 @@ export const getCurrencies = gql`
   }
 }
 `
+export const getCategories = gql`
+{ 
+  categories {
+    name
+  }
+}
+`
 
+export const getProducts = gql`
+  query ($title: String!){ 
+    category(input: {title:$title}){
+      products {
+        id,
+        name,
+        inStock,
+        gallery,
+        prices{
+          currency{
+            label,
+            symbol
+          },
+          amount
+        },
+      }
+    }
+  }
+`
 export default client;

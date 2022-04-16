@@ -1,15 +1,15 @@
-import { CHANGE_CURRENCY_TYPE } from './constants';
+import { CHANGE_CATEGORY_TYPE } from './constants';
 
 const initialState = {
-  currencyType: null,
+  categoryName: '',
 };
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
-    case CHANGE_CURRENCY_TYPE:
+    case CHANGE_CATEGORY_TYPE:
       return {
         ...state,
-        currencyType: action.payload
+        categoryName: action.payload
       };
 
     default:
