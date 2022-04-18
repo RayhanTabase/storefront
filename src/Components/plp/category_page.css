@@ -18,12 +18,13 @@
 }
 
 .plp-content .category-products {
-  margin-top: 5.476rem;
-  width: 100%;
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
   column-gap: 2.5rem;
   row-gap: 6.438rem;
+  margin-top: 5.476rem;
+  margin-bottom: 11.938rem;
+  width: 100%;
 }
 
 .plp-content .category-products .product-card {
@@ -32,6 +33,12 @@
   height: 27.75rem;
   max-height: 27.75rem;
   padding: 1rem;
+  text-decoration: none;
+}
+
+.plp-content .category-products .product-card:hover {
+  transform: scale(1.1);
+  transition: 1s;
 }
 
 .plp-content .category-products .product-card .product-image {

@@ -9,30 +9,19 @@ class ProductsIndex extends Component {
     super(props)  
     this.state={
       products: [],
-      pagProducts: [],
       selectedCurrency: null,
       pageNumber: 1,
       cart: []
     };
   };
 
-  loadProducts = () => {
+  displayProducts = () => {
     var data = this.props.data;
     if (data.loading) return;
-    if (data.category.products.length === this.state.products.length) return;
-    this.setState((prevState) => ({
-      ...prevState,
-      products: data.category.products,
-    }))
-  }
-
-  displayProducts = () => {
-    if (this.state.products.length < 1) {
-      return (
-        <div>Loading</div>
-      )
-    };
-    const pagProducts = this.state.products.slice((this.state.pageNumber - 1) * 6, this.state.pageNumber * 6);
+    console.log(data, this.props.categoryName);
+    if (!data.category) return;
+    const products = data.category.products;
+    const pagProducts = products.slice((this.state.pageNumber - 1) * 6, this.state.pageNumber * 6);
     return pagProducts.map((product) => {
       const productInCart = this.state.cart.find((cartProduct) => cartProduct.id === product.id )
       const isInCart = productInCart === undefined ? false : true;
@@ -45,10 +34,6 @@ class ProductsIndex extends Component {
         />
       )
     });
-  }
-
-  componentDidUpdate = () => {
-    this.loadProducts();
   }
 
   componentDidMount = () => {

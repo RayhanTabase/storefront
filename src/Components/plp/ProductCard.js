@@ -1,5 +1,8 @@
 import React, { Component} from 'react';
+import { NavLink } from 'react-router-dom';
 import inCart from '../../assets/in_cart.svg';
+import store from '../../redux/configureStore';
+import { change_product } from '../../redux/navigation/actions';
 
 
 class ProductCard extends Component {
@@ -9,10 +12,17 @@ class ProductCard extends Component {
     };
   };
 
+  changeProductPage = () =>{
+    store.dispatch(change_product(this.props.product.id));
+  }
+
   displayProduct = () =>{
-    const name = this.props.product.name
-    const prices = this.props.product.prices
-    const price = prices.find((price) => (price.currency.label === this.props.selectedCurrency.label));
+    const name = this.props.product.name;
+    const prices = this.props.product.prices;
+    let price = prices[0];
+    if (this.props.selectedCurrency) {
+      price = prices.find((price) => (price.currency.label === this.props.selectedCurrency.label));
+    }
     const imageSource = this.props.product.gallery[0];
     return (
       <div className={`${!this.props.product.inStock && 'fade-content'}`}>
@@ -48,9 +58,14 @@ class ProductCard extends Component {
 
   render() {
     return (
-      <div className="product-card">
+      <NavLink
+        to = {`/description/`}
+        className = "product-card"
+        onClick={this.changeProductPage}
+      >
         {this.displayProduct()}
-      </div>
+      </NavLink>
+      
     )
   }
 }

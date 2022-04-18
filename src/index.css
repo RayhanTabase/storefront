@@ -38,3 +38,11 @@ img {
   width: 0.888rem;
   height: 0.366rem;
 }
+
+.notice-info {
+  width: fit-content;
+  padding: 1rem;
+  margin-bottom: 2rem;
+  background: black;
+  color: #fff;
+}

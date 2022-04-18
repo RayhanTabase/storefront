@@ -9,29 +9,46 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-export const categoriesPageDisplay = gql`
+// use redux to record id of items added to cart and also the quantity
+
+export const getCurrencies = gql`
 { 
-  category(input:{title:"all"}){
-    products {
-      id,
-      name,
-      inStock,
-      gallery,
-      prices{
-        currency{
-          label,
-          symbol
-        },
-        amount
-      },
-    }
+  currencies {
+    label,
+    symbol
   }
 }
 `
-
-export const getProductSingle = gql`
+export const getCategories = gql`
 { 
-  product(id: "huarache-x-stussy-le") {
+  categories {
+    name
+  }
+}
+`
+export const getProducts = gql`
+  query ($title: String!){ 
+    category(input: {title:$title}){
+      products {
+        id,
+        name,
+        inStock,
+        gallery,
+        prices{
+          currency{
+            label,
+            symbol
+          },
+          amount
+        },
+      }
+    }
+  }
+`
+
+export const getDescription = gql`
+query ($id: String!){ 
+  product(id: $id) {
     id,
     name,
     inStock,
@@ -59,11 +76,9 @@ export const getProductSingle = gql`
   }
 }
 `
-
-// use redux to record id of items added to cart and also the quantity
-export const getCartItems = gql`
-{ 
-  product(id: "huarache-x-stussy-le") {
+export const getItem = gql`
+query ($id: String!){ 
+  product(id: $id) {
     id,
     name,
     brand,
@@ -89,39 +104,5 @@ export const getCartItems = gql`
   }
 }
 `
-export const getCurrencies = gql`
-{ 
-  currencies {
-    label,
-    symbol
-  }
-}
-`
-export const getCategories = gql`
-{ 
-  categories {
-    name
-  }
-}
-`
 
-export const getProducts = gql`
-  query ($title: String!){ 
-    category(input: {title:$title}){
-      products {
-        id,
-        name,
-        inStock,
-        gallery,
-        prices{
-          currency{
-            label,
-            symbol
-          },
-          amount
-        },
-      }
-    }
-  }
-`
 export default client;

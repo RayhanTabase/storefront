@@ -1,0 +1,2 @@
+export const CHANGE_PRODUCT = 'CHANGE_PRODUCT';
+export const CHANGE_PAGE = 'CHANGE_PAGE';

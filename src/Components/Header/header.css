@@ -19,6 +19,18 @@ nav {
   height: 100%;
 }
 
+a {
+  text-decoration: none;
+  color: rgba(29, 31, 34, 1);
+  font-family: 'Raleway', sans-serif;
+  font-size: 1em;
+  font-family: 'Raleway', sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  line-height: 1.2rem;
+  text-transform: uppercase;
+}
+
 .navLinks {
   gap: 2rem;
   height: 100%;
@@ -34,12 +46,6 @@ nav {
 }
 
 .nav-link .nav-btn {
-  font-size: 1em;
-  font-family: 'Raleway', sans-serif;
-  font-weight: 600;
-  font-style: normal;
-  line-height: 1.2rem;
-  text-transform: uppercase;
   width: 100%;
   padding-right: 1rem;
   padding-left: 1rem;
@@ -63,7 +69,6 @@ nav {
 .active-link::after {
   border-bottom: 3px solid rgba(94, 206, 123, 1);
 }
-
 
 .logo {
   width: 2.563rem;
@@ -136,15 +141,4 @@ header .actions .shopping-cart .cart-items-number {
 
 .currency-option-display:hover {
   background: #f6f6f7;
-}
-
-header .display-cart {
-  position: absolute;
-  top: 4.875rem;
-  right: 0;
-  margin-right: 5.438rem;
-  background: yellow;
-  width: 20.313rem;
-  height: 33.75rem;
-  display: none;
 }

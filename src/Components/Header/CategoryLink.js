@@ -1,6 +1,8 @@
 import React, { Component} from 'react';
 import store from '../../redux/configureStore';
 import change_category_type from '../../redux/categorySelected/actions'
+import { NavLink } from 'react-router-dom';
+
 
 class CategoryLink extends Component {
   constructor(props){
@@ -18,12 +20,13 @@ class CategoryLink extends Component {
       <li
         className={`${this.props.category.name === this.props.selectedCategory && 'active-link'} nav-link`}
       >
-      <button
+      <NavLink
         onClick={()=> this.changeCategory(this.props.category.name)}
-        className="btn-colorless nav-btn"
+        to="/"
+        className="nav-btn"
       >
         {this.props.category.name}
-      </button>
+      </NavLink>
       </li>
     );
   }

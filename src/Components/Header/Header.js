@@ -2,7 +2,6 @@ import React, { Component} from 'react';
 import { graphql } from '@apollo/client/react/hoc';
 import './header.css';
 import brandLogo from '../../assets/brand_icon.svg';
-import emptyCart from '../../assets/empty_cart.svg';
 import dropDown from '../../assets/drop_down.svg';
 import dropUp from '../../assets/drop_up.svg';
 import { getCurrencies } from '../../Apollo';
@@ -10,6 +9,7 @@ import store from '../../redux/configureStore';
 import CurrencyPicker from './CurrencyPicker';
 import NavLinks from './NavLinks';
 import change_currency_type from '../../redux/currency_type/actions';
+import CartButton from '../cart/CartButton';
 
 class Header extends Component {
   constructor(props){
@@ -18,7 +18,8 @@ class Header extends Component {
         loadingCurrencies: true,
         selectedCurrency : null,
         availableCurrencies: [],
-        showCurrencyPicker: false
+        showCurrencyPicker: false,
+        cart: []
     };
   }
 
@@ -62,11 +63,13 @@ class Header extends Component {
 
   componentDidMount = () => {
     store.subscribe(() => {
-      const { currencyReducer } = store.getState();
+      const { currencyReducer, cartReducer } = store.getState();
       const { currencyType } = currencyReducer;
+      const { cart } = cartReducer;
       this.setState((prevState) => ({
         ...prevState,
         selectedCurrency: currencyType,
+        cart: cart
       }))
     });
   }
@@ -100,18 +103,16 @@ class Header extends Component {
             </li>
             <li className="shopping-cart">
               <div className="cart-items-number">
-                <p className="bullet">
-                  1
-                </p>
+                {
+                  this.state.cart.length > 0 && 
+                  <p className="bullet">
+                    {this.state.cart.length}
+                  </p>
+                }
               </div>
-              <button type="button" className="btn-colorless">
-                <img src={emptyCart} alt="empty cart" className=""/>
-              </button>
+              <CartButton />
             </li>
           </ul>
-          <div className="display-cart">
-            empty
-          </div>
         </header>
     )
   }
