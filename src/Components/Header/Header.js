@@ -1,21 +1,20 @@
 import React, { Component} from 'react';
 import { graphql } from '@apollo/client/react/hoc';
+import change_currency_type from '../../redux/currency_type/actions';
+import { getCurrencies } from '../../Apollo';
+import store from '../../redux/configureStore';
 import './header.css';
 import brandLogo from '../../assets/brand_icon.svg';
 import dropDown from '../../assets/drop_down.svg';
 import dropUp from '../../assets/drop_up.svg';
-import { getCurrencies } from '../../Apollo';
-import store from '../../redux/configureStore';
-import CurrencyPicker from './CurrencyPicker';
 import NavLinks from './NavLinks';
-import change_currency_type from '../../redux/currency_type/actions';
 import CartButton from '../cart/CartButton';
+import ChangeCurrencyMenu from './ChangeCurrencyMenu';
 
 class Header extends Component {
   constructor(props){
-    super(props)  
+    super(props)
     this.state={
-        loadingCurrencies: true,
         selectedCurrency : null,
         availableCurrencies: [],
         showCurrencyPicker: false,
@@ -23,7 +22,7 @@ class Header extends Component {
     };
   }
 
-  loadCurrencies = () => {
+  setCurrency = () => {
     var data = this.props.data;
     if (data.loading) return;
     if (data.currencies.length === this.state.availableCurrencies.length) return;
@@ -36,20 +35,6 @@ class Header extends Component {
     }));
   }
 
-  displayCurrencies = () => {
-    if (this.state.availableCurrencies.length < 1) {
-      return (
-        <div>Loading</div>
-      )
-    };
-    return this.state.availableCurrencies.map((currency) => (
-      <CurrencyPicker
-        key={currency.symbol}
-        currency={currency}
-      />
-    ));
-  }
-
   displayCurrencyDropDown = () => {
     this.setState((prevState) => ({
       ...prevState,
@@ -58,7 +43,7 @@ class Header extends Component {
   }
 
   componentDidUpdate = () => {
-    this.loadCurrencies();
+    this.setCurrency();
   }
 
   componentDidMount = () => {
@@ -84,21 +69,21 @@ class Header extends Component {
               <p>
                 {this.state.selectedCurrency && this.state.selectedCurrency.symbol}
               </p>
-              <button type="button" className="btn-colorless" onClick={this.displayCurrencyDropDown}>
+              <button type="button" className="btn-colorless displayCurrencyOptionsBtn" onClick={this.displayCurrencyDropDown}>
               {
                 this.state.showCurrencyPicker ?
-                  <img height={10} src={dropUp} alt="drop down" className="sx-icon"/>
+                  <img height={10} src={dropUp} alt="drop down" className="sx-icon displayCurrencyOptionsBtn"/>
                 :
-                  <img height={10} src={dropDown} alt="drop down" className="sx-icon"/>
+                  <img height={10} src={dropDown} alt="drop down" className="sx-icon displayCurrencyOptionsBtn"/>
               }
               </button>
               {
-                this.state.showCurrencyPicker ?
-                <div className="currency-options">
-                  {this.displayCurrencies()}
-                </div>
-                :
-                ''
+                this.state.showCurrencyPicker &&
+                <ChangeCurrencyMenu
+                  currencies={this.state.availableCurrencies}
+                  closeMenu={this.displayCurrencyDropDown}
+                  showCurrencyPicker={this.state.showCurrencyPicker}
+                />
               }
             </li>
             <li className="shopping-cart">

@@ -52,7 +52,7 @@ class Description extends Component {
       if (cartItem.id === product.id) inCart = true;
     })
     let price = product.prices[0];
-    if (this.state.selectedCurrency) {
+    if (this.state.selectedCurrency !== null) {
       price = product.prices.find((price) => (price.currency.label === this.state.selectedCurrency.label));
     }
     return (
@@ -121,7 +121,7 @@ class Description extends Component {
               </span>
             </span>
           </p>
-          {/* {
+          {
             inCart ? 
             <div className="notice-info"> 
               <p>
@@ -136,14 +136,8 @@ class Description extends Component {
             >
               ADD TO CART
             </button>
-          } */}
-          <button
-              type="button"
-              className="add-toCart-btn"
-              onClick={this.addToCart}
-            >
-              ADD TO CART
-            </button>
+          }
+         
           <div className="product-information" dangerouslySetInnerHTML={{__html: `${product.description}`}} />
         </div>
       </>
@@ -152,15 +146,48 @@ class Description extends Component {
 
   componentDidMount = () => {
     store.subscribe(() => {
-      const { cartReducer, currencyReducer } = store.getState();
-      const { cart } = cartReducer;
+      const { currencyReducer, cartReducer } = store.getState();
       const { currencyType } = currencyReducer;
+      const { cart } = cartReducer;
       this.setState((prevState) => ({
         ...prevState,
-        cart: cart,
         selectedCurrency: currencyType,
+        cart:cart
       }))
     });
+    const { currencyReducer, cartReducer } = store.getState();
+    const { currencyType } = currencyReducer;
+    const { cart } = cartReducer;
+    if (this.state.selectedCurrency !== currencyType) {
+      this.setState((prevState) => ({
+        ...prevState,
+        selectedCurrency: currencyType,
+      }))
+    }
+    if (this.state.cart !== cart ) {
+      this.setState((prevState) => ({
+        ...prevState,
+        cart:cart
+      }))
+    }
+  }
+
+  componentDidUpdate = () => {
+    const { currencyReducer, cartReducer } = store.getState();
+    const { currencyType } = currencyReducer;
+    const { cart } = cartReducer;
+    if (this.state.selectedCurrency !== currencyType) {
+      this.setState((prevState) => ({
+        ...prevState,
+        selectedCurrency: currencyType,
+      }))
+    }
+    if (this.state.cart !== cart ) {
+      this.setState((prevState) => ({
+        ...prevState,
+        cart:cart
+      }))
+    }
   }
 
   render() {

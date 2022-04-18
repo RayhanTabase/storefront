@@ -4,15 +4,24 @@ import './mini_cart.css';
 
 class MiniCart extends Component {
   constructor(props){
-    super(props)  
+    super(props)
+    this.wrapperRef = React.createRef();
+    this.handleClickOutside = this.handleClickOutside.bind(this); 
     this.state={
       showMiniCart: false,
       selectedCurrency: null,
       cart : []
     };
   };
+  
+  handleClickOutside(event) {
+    if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
+      this.props.showMiniCart();
+    }
+  }
 
   componentDidMount = () => {
+    document.addEventListener("mousedown", this.handleClickOutside);
     store.subscribe(() => {
       const { cartReducer, currencyReducer } = store.getState();
       const { cart } = cartReducer;
@@ -24,10 +33,17 @@ class MiniCart extends Component {
       }))
     });
   }
-  
+
+  componentWillUnmount() {
+    document.removeEventListener("mousedown", this.handleClickOutside);
+  }
+
   render() {
     return (
-      <div className="display-mini-cart">
+      <div 
+        className="display-mini-cart"
+        ref={this.wrapperRef}
+      >
           empty
       </div>
     )

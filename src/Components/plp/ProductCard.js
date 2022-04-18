@@ -6,12 +6,7 @@ import { change_product } from '../../redux/navigation/actions';
 
 
 class ProductCard extends Component {
-  constructor(props){
-    super(props)  
-    this.state={
-    };
-  };
-
+  
   changeProductPage = () =>{
     store.dispatch(change_product(this.props.product.id));
   }
@@ -57,6 +52,7 @@ class ProductCard extends Component {
   }
 
   render() {
+    // console.log(this.props.selectedCurrency);
     return (
       <NavLink
         to = {`/description/`}

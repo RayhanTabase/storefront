@@ -4,14 +4,13 @@ import MiniCart from './MiniCart';
 
 class CartButton extends Component {
   constructor(props){
-    super(props)  
+    super(props)
     this.state={
       showMiniCart: false
     };
   };
 
   showMiniCart = () => {
-    console.log('click')
     this.setState((prevState) => ({
       ...prevState,
       showMiniCart: !prevState.showMiniCart
@@ -30,7 +29,7 @@ class CartButton extends Component {
         </button>
         {
           this.state.showMiniCart &&
-          <MiniCart />
+          <MiniCart showMiniCart={this.showMiniCart} />
         }
       </>
     )

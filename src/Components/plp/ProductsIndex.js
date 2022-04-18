@@ -6,7 +6,7 @@ import ProductCard from './ProductCard';
 
 class ProductsIndex extends Component {
   constructor(props){
-    super(props)  
+    super(props)
     this.state={
       products: [],
       selectedCurrency: null,
@@ -18,7 +18,6 @@ class ProductsIndex extends Component {
   displayProducts = () => {
     var data = this.props.data;
     if (data.loading) return;
-    console.log(data, this.props.categoryName);
     if (!data.category) return;
     const products = data.category.products;
     const pagProducts = products.slice((this.state.pageNumber - 1) * 6, this.state.pageNumber * 6);
@@ -47,6 +46,39 @@ class ProductsIndex extends Component {
         cart:cart
       }))
     });
+    const { currencyReducer, cartReducer } = store.getState();
+    const { currencyType } = currencyReducer;
+    const { cart } = cartReducer;
+    if (this.state.selectedCurrency !== currencyType) {
+      this.setState((prevState) => ({
+        ...prevState,
+        selectedCurrency: currencyType,
+      }))
+    }
+    if (this.state.cart !== cart ) {
+      this.setState((prevState) => ({
+        ...prevState,
+        cart:cart
+      }))
+    }
+  }
+
+  componentDidUpdate = () => {
+    const { currencyReducer, cartReducer } = store.getState();
+    const { currencyType } = currencyReducer;
+    const { cart } = cartReducer;
+    if (this.state.selectedCurrency !== currencyType) {
+      this.setState((prevState) => ({
+        ...prevState,
+        selectedCurrency: currencyType,
+      }))
+    }
+    if (this.state.cart !== cart ) {
+      this.setState((prevState) => ({
+        ...prevState,
+        cart:cart
+      }))
+    }
   }
 
   render() {
