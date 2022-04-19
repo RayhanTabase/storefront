@@ -6,17 +6,6 @@
   padding-right: 7.25rem;
 }
 
-.plp-content .category-title {
-  text-transform: uppercase;
-  font-family: 'Raleway';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 2.625rem;
-  line-height: 160%;
-  padding: 0;
-  margin: 0;
-}
-
 .plp-content .category-products {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr;
@@ -42,6 +31,7 @@
 }
 
 .plp-content .category-products .product-card .product-image {
+  width: 100%;
   height : 21.125rem;
   margin-bottom: 1.313rem;
   display: flex;

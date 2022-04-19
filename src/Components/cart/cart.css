@@ -1,0 +1,26 @@
+.cart-is-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background: yellow;
+}
+
+.cart-is-empty-fullscreen {
+  min-height: 80vh;
+}
+
+.cart-page-full {
+  margin-left: 5.25rem;
+  margin-right: 15.125rem;
+  margin-top: 5rem;
+}
+
+hr {
+  margin-bottom: 1.25rem;
+}
+
+hr:last-child {
+  display: none;
+}

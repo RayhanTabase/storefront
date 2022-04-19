@@ -22,10 +22,10 @@ class CartButton extends Component {
       <>
         <button
           type="button"
-          className="btn-colorless"
+          className="btn-colorless cartMenuBtn"
           onClick={this.showMiniCart}
           >
-          <img src={emptyCart} alt="empty cart" className=""/>
+          <img className="cartMenuBtn" src={emptyCart} alt="empty cart"/>
         </button>
         {
           this.state.showMiniCart &&

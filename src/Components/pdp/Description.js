@@ -40,7 +40,7 @@ class Description extends Component {
     const data = this.props.data;
     if (data.loading) return;
     const product_id = data.product.id
-    store.dispatch(add_to_cart({id: product_id, attributes: this.state.selectedAttributes }));
+    store.dispatch(add_to_cart({id: product_id, attributes: this.state.selectedAttributes, quantity:1 }));
   }
 
   loadDescription = () => {

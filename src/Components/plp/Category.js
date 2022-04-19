@@ -23,7 +23,7 @@ class Category extends Component {
   render() {
     return (
       <div className="plp-content">
-        <h2 className="category-title">
+        <h2 className="page-header">
           {this.useCategory()}
         </h2>
         <ProductsIndex

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400;500;600;700&family=Roboto:wght@500&family=Source+Sans+Pro&display=swap');
+
 .display-mini-cart {
   position: absolute;
   position: absolute;
@@ -8,4 +10,49 @@
   background: yellow;
   width: 20.313rem;
   height: 33.75rem;
+  z-index: 100;
+  padding-top: 0.5rem;
+  padding-left: 1rem;
+}
+
+.display-mini-cart .mini-cart-cart-empty {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.display-mini-cart .mini-cart-title {
+  margin-bottom: 1.563rem;
+}
+
+.display-mini-cart .mini-cart-title .title {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 16px;
+  line-height: 160%;
+  margin-right: 0.5rem;
+}
+
+.display-mini-cart .mini-cart-title .count {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-size: 16px;
+  line-height: 160%;
+  font-size: 500;
+}
+
+.display-mini-cart .mini-cart-products-content {
+  background: orange;
+  height: 19.731rem;
+  max-height: 22.356rem;
+  overflow: scroll;
+  margin-bottom: 2.625rem;
+}
+
+.display-mini-cart .mini-cart-products-content .mini-cart-product {
+  margin-bottom: 2.625rem;
+  height: 8.563rem;
+
 }

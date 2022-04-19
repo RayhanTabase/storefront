@@ -52,7 +52,6 @@ class ProductCard extends Component {
   }
 
   render() {
-    // console.log(this.props.selectedCurrency);
     return (
       <NavLink
         to = {`/description/`}
