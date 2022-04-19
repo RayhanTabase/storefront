@@ -1,112 +1,106 @@
 import React, { Component} from 'react';
 import { graphql } from '@apollo/client/react/hoc';
+import change_currency_type from '../../redux/currency_type/actions';
+import { getCurrencies } from '../../Apollo';
+import store from '../../redux/configureStore';
 import './header.css';
 import brandLogo from '../../assets/brand_icon.svg';
-import emptyCart from '../../assets/empty_cart.svg';
 import dropDown from '../../assets/drop_down.svg';
-import { getCurrencies } from '../../Apollo'
-import store from '../../redux/configureStore';
+import dropUp from '../../assets/drop_up.svg';
+import NavLinks from './NavLinks';
+import CartButton from '../cart/CartButton';
+import ChangeCurrencyMenu from './ChangeCurrencyMenu';
 
 class Header extends Component {
   constructor(props){
-    super(props)  
+    super(props)
     this.state={
-        loadingCurrencies: true,
-        selectedCurrency : {},
-        availableCurrencies: []
-    }  
+        selectedCurrency : null,
+        availableCurrencies: [],
+        showCurrencyPicker: false,
+        cart: []
+    };
+  }
+
+  setCurrency = () => {
+    var data = this.props.data;
+    if (data.loading) return;
+    if (data.currencies.length === this.state.availableCurrencies.length) return;
+    if (this.state.selectedCurrency === null) {
+      store.dispatch(change_currency_type(data.currencies[0]));
+    };
+    this.setState((prevState) => ({
+      ...prevState,
+      availableCurrencies: data.currencies,
+    }));
+  }
+
+  displayCurrencyDropDown = () => {
+    this.setState((prevState) => ({
+      ...prevState,
+      showCurrencyPicker: !prevState.showCurrencyPicker
+    }));
+  }
+
+  componentDidUpdate = () => {
+    this.setCurrency();
   }
 
   componentDidMount = () => {
     store.subscribe(() => {
-      const { currencyReducer } = store.getState();
+      const { currencyReducer, cartReducer } = store.getState();
       const { currencyType } = currencyReducer;
+      const { cart } = cartReducer;
       this.setState((prevState) => ({
         ...prevState,
         selectedCurrency: currencyType,
+        cart: cart
       }))
     });
   }
 
-  loadCurrencies = () => {
-    var data = this.props.data
-    if (data.loading) return;
-    if (data.currencies.length === this.state.availableCurrencies.length) return;
-    console.log(data);
-    this.setState((prevState) => ({
-      ...prevState,
-      availableCurrencies: data.currencies,
-    }))
-  }
-
-  componentDidUpdate = () => {
-    this.loadCurrencies();
-  }
-
   render() {
-    console.log(this.state.availableCurrencies);
     return (
         <header className="d-flex">
-          <ul className="navLinks d-flex">
-            <li className="nav-link active-link">
-              <p>
-                Women
-              </p>
-            </li>
-            <li className="nav-link">
-              <p>
-                Men
-              </p>
-            </li>
-            <li className="nav-link">
-              <p>
-                Kids
-              </p>
-            </li>
-          </ul>
+          <NavLinks />
           <img src={brandLogo} alt="logo" className="logo"/>
-          <ul className="actions d-flex">
+          <ul className="actions">
             <li className="currencySwitcher d-flex">
               <p>
-                {this.state.selectedCurrency.symbol}
+                {this.state.selectedCurrency && this.state.selectedCurrency.symbol}
               </p>
-              <button type="button" className="btn-colorless">
-                <img height={10} src={dropDown} alt="drop down" className="sx-icon"/>
+              <button type="button" className="btn-colorless displayCurrencyOptionsBtn" onClick={this.displayCurrencyDropDown}>
+              {
+                this.state.showCurrencyPicker ?
+                  <img height={10} src={dropUp} alt="drop down" className="sx-icon displayCurrencyOptionsBtn"/>
+                :
+                  <img height={10} src={dropDown} alt="drop down" className="sx-icon displayCurrencyOptionsBtn"/>
+              }
               </button>
-              <div className="currency-options">
-                {this.state.availableCurrencies.map((currency) => {
-                  return (
-                    <div className="currency-option-display">
-                      <p>{currency.symbol}</p>
-                      <p>{currency.label}</p>
-                    </div>
-                  )
-                })}
-                {this.state.availableCurrencies.map((currency) => (
-                  <div className="currency-option-display">
-                    <p>{currency.symbol}</p>
-                    <p>{currency.label}</p>
-                  </div>
-                ))}
-              </div>
+              {
+                this.state.showCurrencyPicker &&
+                <ChangeCurrencyMenu
+                  currencies={this.state.availableCurrencies}
+                  closeMenu={this.displayCurrencyDropDown}
+                  showCurrencyPicker={this.state.showCurrencyPicker}
+                />
+              }
             </li>
             <li className="shopping-cart">
               <div className="cart-items-number">
-                <p className="bullet">
-                  1
-                </p>
+                {
+                  this.state.cart.length > 0 && 
+                  <p className="bullet">
+                    {this.state.cart.length}
+                  </p>
+                }
               </div>
-              <button type="button" className="btn-colorless">
-                <img src={emptyCart} alt="empty cart" className=""/>
-              </button>
+              <CartButton />
             </li>
           </ul>
-          <div className="display-cart">
-            aa
-          </div>
         </header>
     )
   }
 }
 
-export default  graphql(getCurrencies)(Header);
+export default graphql(getCurrencies)(Header);

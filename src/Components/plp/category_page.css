@@ -1,0 +1,93 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@300;400&display=swap');
+
+.plp-content {
+  padding-top: 5rem;
+  padding-left: 6.25rem;
+  padding-right: 7.25rem;
+}
+
+.plp-content .category-title {
+  text-transform: uppercase;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2.625rem;
+  line-height: 160%;
+  padding: 0;
+  margin: 0;
+}
+
+.plp-content .category-products {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  column-gap: 2.5rem;
+  row-gap: 6.438rem;
+  margin-top: 5.476rem;
+  margin-bottom: 11.938rem;
+  width: 100%;
+}
+
+.plp-content .category-products .product-card {
+  width: 24.125rem;
+  max-width: 24.125rem;
+  height: 27.75rem;
+  max-height: 27.75rem;
+  padding: 1rem;
+  text-decoration: none;
+}
+
+.plp-content .category-products .product-card:hover {
+  transform: scale(1.1);
+  transition: 1s;
+}
+
+.plp-content .category-products .product-card .product-image {
+  height : 21.125rem;
+  margin-bottom: 1.313rem;
+  display: flex;
+}
+
+.plp-content .category-products .product-card .fade-content {
+  opacity: 0.5;
+}
+
+.plp-content .category-products .product-card .product-name {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 160%;
+}
+
+.plp-content .category-products .product-card .product-price {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 160%;
+}
+
+.plp-content .category-products .product-card .product-outOfStock {
+  position: absolute;
+  margin-left: 5.625rem;
+  margin-top: 9.438rem;
+  width: 10.813rem;
+}
+
+.plp-content .category-products .product-card .product-outOfStock p {
+  text-transform: uppercase;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 160%;
+  color: rgba(141, 143, 154, 1);
+}
+
+.plp-content .category-products .product-card .product-inCart {
+   width: 3.25rem;
+   height: 3.25rem;
+   position: absolute;
+   margin-left: 20.5rem;
+   margin-top: 19.67rem;
+}

@@ -1,16 +1,37 @@
 import React, { Component} from 'react';
 import { graphql } from '@apollo/client/react/hoc';
-import { getProductsCategory } from '../../Apollo';
+import './category_page.css';
+import ProductsIndex from './ProductsIndex';
+import { getCategories } from '../../Apollo';
+
 
 class Category extends Component {
+  constructor(props){
+    super(props)  
+    this.state={
+      categoryName: ''
+    };
+  };
+
+  useCategory = () => {
+    if (this.props.categoryName !== '') return this.props.categoryName;
+    var data = this.props.data;
+    if (data.loading) return '';
+    return data.categories[0].name;
+  }
+
   render() {
-    console.log(this.props)
     return (
-        <div>
-          Hello world
-        </div>
+      <div className="plp-content">
+        <h2 className="category-title">
+          {this.useCategory()}
+        </h2>
+        <ProductsIndex
+          categoryName={this.useCategory()}
+        />
+      </div>
     )
   }
 }
 
-export default graphql(getProductsCategory)(Category);
+export default graphql(getCategories)(Category);

@@ -1,52 +1,71 @@
-import React, { useState, useEffect } from 'react';
-import { NavLink, useLocation } from 'react-router-dom';
-import PropTypes from 'prop-types';
-import { GiHamburgerMenu } from 'react-icons/gi';
-import { GrClose } from 'react-icons/gr';
-import Logo from '../../icons/planet.png';
+import React, { Component} from 'react';
+import store from '../../redux/configureStore';
+import { graphql } from '@apollo/client/react/hoc';
+import { getCategories } from '../../Apollo';
+import CategoryLink from './CategoryLink';
+import change_category_type from '../../redux/categorySelected/actions'
 
-const NavLink = () => {
-  const [showHamburgerLinks, setShowHamburgerLinks] = useState(false);
-
-  const showLinks = () => {
-    setShowHamburgerLinks((prevState) => !prevState);
+class NavLinks extends Component {
+  constructor(props){
+    super(props)  
+    this.state={
+      selectedCategory : '',
+      categories:[],
+    };
   };
-  const links = [
-    {
-      id: 1,
-      path: '/women',
-      text: 'WOMEN',
-    },
-    {
-      id: 2,
-      path: '/men',
-      text: 'MEN',
-    },
-    {
-      id: 3,
-      path: '/kids',
-      text: 'KIDS',
-    },
-  ];
-  const location = useLocation();
-  useEffect(() => {
-    setShowHamburgerLinks(false);
-  }, [location]);
-  return (
-    <>
+
+  loadCategories = () => {
+    var data = this.props.data;
+    if (data.loading) return;
+    if (data.categories.length === this.state.categories.length) return;
+    if (this.state.selectedCategory === '') {
+      store.dispatch(change_category_type(data.categories[0].name))
+    };
+    this.setState((prevState) => ({
+      ...prevState,
+      categories: data.categories
+    }));
+  }
+
+  displayNavLinks = () => {
+    if (this.state.categories.length < 1) {
+      return (
+        <div>Loading</div>
+      )
+    };
+    return this.state.categories.map((category) => (
+      <CategoryLink
+        key={category.name}
+        selectedCategory={this.state.selectedCategory}
+        category={category}
+      />
+    ));
+  };
+
+  componentDidMount = () => {
+    store.subscribe(() => {
+      const { categoryReducer } = store.getState();
+      const { categoryName } = categoryReducer;
+      this.setState((prevState) => ({
+        ...prevState,
+        selectedCategory: categoryName,
+      }))
+    });
+  }
+
+  componentDidUpdate = () => {
+    this.loadCategories();
+  }
+  
+  render() {
+    return (
       <nav>
-        <ul className="flex gap-8">
-          {links.map((link) => (
-            <li
-              key={link.id}
-            >
-              <NavLink to={link.path}>{link.text}</NavLink>
-            </li>
-          ))}
+        <ul className="navLinks d-flex">
+          {this.displayNavLinks()}
         </ul>
       </nav>
-    </>
-  );
+    );
+  }
 };
 
-export default NavLink;
+export default graphql(getCategories)(NavLinks);

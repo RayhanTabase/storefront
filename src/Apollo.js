@@ -9,65 +9,46 @@ const client = new ApolloClient({
   cache: new InMemoryCache()
 });
 
-export const getProductsCategory = gql`
+// use redux to record id of items added to cart and also the quantity
+
+export const getCurrencies = gql`
 { 
-  category(input:{title:"all"}){
-    name,
-    products {
-      id,
-      name,
-      inStock,
-      gallery,
-      description,
-      category,
-      attributes{
+  currencies {
+    label,
+    symbol
+  }
+}
+`
+export const getCategories = gql`
+{ 
+  categories {
+    name
+  }
+}
+`
+export const getProducts = gql`
+  query ($title: String!){ 
+    category(input: {title:$title}){
+      products {
         id,
         name,
-        type,
-        items {
-          displayValue,
-          value,
-          id
-        }
-      },
-      prices{
-        currency{
-          label,
-          symbol
+        inStock,
+        gallery,
+        prices{
+          currency{
+            label,
+            symbol
+          },
+          amount
         },
-        amount
-      },
-      brand
+      }
     }
   }
-}
 `
 
-
-export const categoriesPageDisplay = gql`
-{ 
-  category(input:{title:"all"}){
-    products {
-      id,
-      name,
-      inStock,
-      gallery,
-      prices{
-        currency{
-          label,
-          symbol
-        },
-        amount
-      },
-    }
-  }
-}
-`
-
-
-export const getProductSingle = gql`
-{ 
-  product(id: "huarache-x-stussy-le") {
+export const getDescription = gql`
+query ($id: String!){ 
+  product(id: $id) {
     id,
     name,
     inStock,
@@ -95,11 +76,9 @@ export const getProductSingle = gql`
   }
 }
 `
-
-// use redux to record id of items added to cart and also the quantity
-export const getCartItems = gql`
-{ 
-  product(id: "huarache-x-stussy-le") {
+export const getItem = gql`
+query ($id: String!){ 
+  product(id: $id) {
     id,
     name,
     brand,
@@ -122,15 +101,6 @@ export const getCartItems = gql`
       },
       amount
     },
-  }
-}
-`
-
-export const getCurrencies = gql`
-{ 
-  currencies {
-    label,
-    symbol
   }
 }
 `

@@ -1,0 +1,11 @@
+.display-mini-cart {
+  position: absolute;
+  position: absolute;
+  /* top: 4.875rem; */
+  top: 2.614rem;
+  right: 0;
+  margin-right: 5.438rem;
+  background: yellow;
+  width: 20.313rem;
+  height: 33.75rem;
+}
