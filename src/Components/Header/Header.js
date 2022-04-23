@@ -23,7 +23,7 @@ class Header extends Component {
   }
 
   setCurrency = () => {
-    var data = this.props.data;
+    const data = this.props.data;
     if (data.loading) return;
     if (data.currencies.length === this.state.availableCurrencies.length) return;
     if (this.state.selectedCurrency === null) {

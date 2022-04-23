@@ -9,7 +9,11 @@ const reducer = (state = initialState, action) => {
     case ADD_TO_CART:
       return {
         ...state,
-        cart: [...state.cart, action.payload],
+        cart: [...state.cart.filter((product) => {
+          if (product.id !== action.payload.id ||  JSON.stringify(product.attributes) !== JSON.stringify(action.payload.attributes)) {
+            return product;
+          };
+        }), action.payload],
       };
 
     case REMOVE_FROM_CART:
@@ -22,7 +26,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         cart: state.cart.map((product) => {
-          if (product.id !== action.payload) {
+          if (JSON.stringify(product) === JSON.stringify(action.payload)) {
             product.quantity += 1;
           }
           return product;
@@ -33,7 +37,7 @@ const reducer = (state = initialState, action) => {
       return {
         ...state,
         cart: state.cart.map((product) => {
-          if (product.id !== action.payload) {
+          if (JSON.stringify(product) === JSON.stringify(action.payload)) {
             product.quantity -= 1;
           }
           return product;

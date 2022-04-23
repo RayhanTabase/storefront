@@ -15,7 +15,7 @@ class NavLinks extends Component {
   };
 
   loadCategories = () => {
-    var data = this.props.data;
+    const data = this.props.data;
     if (data.loading) return;
     if (data.categories.length === this.state.categories.length) return;
     if (this.state.selectedCategory === '') {
@@ -28,11 +28,7 @@ class NavLinks extends Component {
   }
 
   displayNavLinks = () => {
-    if (this.state.categories.length < 1) {
-      return (
-        <div>Loading</div>
-      )
-    };
+    if (this.state.categories.length < 1) return '';
     return this.state.categories.map((category) => (
       <CategoryLink
         key={category.name}

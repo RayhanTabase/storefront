@@ -98,14 +98,15 @@
 }
 
 .product-description .product-details .product-attributes .product-attribute-section .attribute-value-color {
-  border-radius: 50px;
   width: 3.938rem;
   height: 2.813rem;
   opacity: 0.5;
+  border: 1px solid rgb(189, 189, 189);
 }
 
 .product-description .product-details .product-attributes .product-attribute-section .attribute-selected-color {
   opacity: 1;
+  border: 3px ridge rgba(94, 206, 123, 1);
 }
 
 .product-description .product-details .product-price {

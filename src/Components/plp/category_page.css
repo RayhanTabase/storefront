@@ -37,10 +37,6 @@
   display: flex;
 }
 
-.plp-content .category-products .product-card .fade-content {
-  opacity: 0.5;
-}
-
 .plp-content .category-products .product-card .product-name {
   font-family: 'Raleway';
   font-style: normal;

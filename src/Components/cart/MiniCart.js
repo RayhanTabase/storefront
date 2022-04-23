@@ -75,12 +75,12 @@ class MiniCart extends Component {
   render() {
     return (
       <div 
-        className="display-mini-cart"
+        
         ref={this.wrapperRef}
       >
         {
           this.state.cart.length < 1 ?
-            <p className="mini-cart-cart-empty">Empty Cart</p>
+            <p className="mini-cart-cart-empty">Cart Empty</p>
           :
           <>
             <p className="mini-cart-title">

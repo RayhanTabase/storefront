@@ -24,7 +24,7 @@ class Cart extends Component {
   componentDidUpdate = () => {
     const { cartReducer } = store.getState();
     const { cart } = cartReducer;
-    if (cart.length === this.state.cart.length) return;
+    if (JSON.stringify(cart) === JSON.stringify(this.state.cart)) return;
     this.setState((prevState) => ({
       ...prevState,
       cart: cart,
