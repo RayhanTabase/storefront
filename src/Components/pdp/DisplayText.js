@@ -19,14 +19,27 @@ class DisplayText extends Component {
         }
       })
       return (
-        <button
+        <div
           key={item.value}
-          className={`attribute-value-text ${isSelected && 'attribute-selected-text'}`}
-          type="button"
-          onClick={() => this.props.addAttribute(this.props.attribute.id, item.value)}
         >
-          {item.value}
-        </button>
+        {
+          this.props.cartPage === true ?
+            <div
+              className={`attribute-value-text ${isSelected && 'attribute-selected-text'}`}
+            >
+              {item.value}
+            </div>
+          :
+           <button
+              className={`attribute-value-text ${isSelected && 'attribute-selected-text'}`}
+              type="button"
+              onClick={() => this.props.addAttribute(this.props.attribute.id, item.value)}
+            >
+              {item.value}
+            </button>
+
+        }
+        </div>
       )
     })
   }

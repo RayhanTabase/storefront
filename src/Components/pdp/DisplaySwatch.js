@@ -19,13 +19,24 @@ class DisplaySwatch extends Component {
         }
       })
       return (
-        <button
+        <div
           key={item.value}
-          className={`attribute-value-color ${isSelected && 'attribute-selected-color'}`}
-          type="button"
-          onClick={() => this.props.addAttribute(this.props.attribute.id, item.value)}
-          style={{ background: `${item.value}` }}
-        />
+        >
+        {
+          this.props.cartPage === true ?
+          <div
+            className={`attribute-value-color ${isSelected && 'attribute-selected-color'}`}
+            style={{ background: `${item.value}` }}
+          />
+          :
+          <button
+            className={`attribute-value-color ${isSelected && 'attribute-selected-color'}`}
+            type="button"
+            onClick={() => this.props.addAttribute(this.props.attribute.id, item.value)}
+            style={{ background: `${item.value}` }}
+          />
+        }
+        </div>
       )
     })
   }
@@ -34,7 +45,7 @@ class DisplaySwatch extends Component {
     return (
       <div>
         <p className="product-attribute-title">
-          {this.props.attribute.name}:
+          {this.props.attribute.name}
         </p>
         <div className="product-attribute-section d-flex">
           {this.displayList()}

@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap');
+
 body {
   margin: 0;
   box-sizing: border-box;
@@ -13,8 +15,12 @@ ul {
   margin: 0;
 }
 
+a {
+  text-decoration: none;
+}
+
 img {
-  width: 100%;
+  max-width: 100%;
 }
 
 .d-flex {
@@ -45,4 +51,43 @@ img {
   margin-bottom: 2rem;
   background: black;
   color: #fff;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.page-header {
+  text-transform: uppercase;
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 2.625rem;
+  line-height: 160%;
+  padding: 0;
+  margin: 0;
+}
+
+.page-header2 {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 700;
+  font-size: 32px;
+  line-height: 40px;
+  margin-bottom: 3.688rem;
+}
+
+.darken-main-content {
+  position: absolute;
+  top: 5rem;
+  left: 0;
+  background-color: #000;
+  opacity: 0.5;
+  width: 100%;
+  height: 200vh;
+  z-index: 1;
+}
+
+.fade-content {
+  opacity: 0.5;
 }

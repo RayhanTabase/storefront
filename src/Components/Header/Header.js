@@ -23,7 +23,7 @@ class Header extends Component {
   }
 
   setCurrency = () => {
-    var data = this.props.data;
+    const data = this.props.data;
     if (data.loading) return;
     if (data.currencies.length === this.state.availableCurrencies.length) return;
     if (this.state.selectedCurrency === null) {
@@ -86,11 +86,11 @@ class Header extends Component {
                 />
               }
             </li>
-            <li className="shopping-cart">
-              <div className="cart-items-number">
+            <li className="shopping-cart cartMenuBtn">
+              <div className="cart-items-number cartMenuBtn">
                 {
                   this.state.cart.length > 0 && 
-                  <p className="bullet">
+                  <p className="bullet cartMenuBtn">
                     {this.state.cart.length}
                   </p>
                 }

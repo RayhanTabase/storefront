@@ -35,22 +35,39 @@ class Description extends Component {
     }));
   }
 
+  checkAttrubutesSelected = () => {
+    const data = this.props.data;
+    if (data.loading) return;
+    const attributes = data.product.attributes;
+    if (attributes.length !== Object.keys(this.state.selectedAttributes).length) return false;
+    return true;
+  }
+
   addToCart = () => {
     //check attributes selected
+    if ( !this.checkAttrubutesSelected()) {
+      // error message
+      alert('Please make a selection for all product attributes');
+      return;
+    }
     const data = this.props.data;
     if (data.loading) return;
     const product_id = data.product.id
-    store.dispatch(add_to_cart({id: product_id, attributes: this.state.selectedAttributes }));
+    console.log(this.state.cart);
+    let item = this.state.cart.find((item) => JSON.stringify(item.attributes) === JSON.stringify(this.state.selectedAttributes) && item.id === this.props.product_id)
+    if (item !== undefined) {
+      alert('This item is already in the cart')
+      return;
+    }
+    store.dispatch(add_to_cart({id: product_id, attributes: this.state.selectedAttributes, quantity:1 }));
+    // success message, create component
+    alert(`Successfully added ${data.product.name} to cart`)
   }
 
   loadDescription = () => {
     var data = this.props.data;
     if (data.loading) return '';
     const product = data.product
-    let inCart = false;
-    this.state.cart.forEach((cartItem) => {
-      if (cartItem.id === product.id) inCart = true;
-    })
     let price = product.prices[0];
     if (this.state.selectedCurrency !== null) {
       price = product.prices.find((price) => (price.currency.label === this.state.selectedCurrency.label));
@@ -93,6 +110,7 @@ class Description extends Component {
                     attribute={attribute}
                     addAttribute={this.addAttribute}
                     selectedAttributes={this.state.selectedAttributes}
+                    cartPage={false}
                   />
                 )
               }else if (attribute.type === "swatch") {
@@ -102,6 +120,7 @@ class Description extends Component {
                     attribute={attribute}
                     addAttribute={this.addAttribute}
                     selectedAttributes={this.state.selectedAttributes}
+                    cartPage={false}
                   />
                 )
               } else {return ''}
@@ -121,22 +140,14 @@ class Description extends Component {
               </span>
             </span>
           </p>
-          {
-            inCart ? 
-            <div className="notice-info"> 
-              <p>
-                ALREADY IN CART
-              </p>
-            </div>
-            :
-            <button
-              type="button"
-              className="add-toCart-btn"
-              onClick={this.addToCart}
-            >
-              ADD TO CART
-            </button>
-          }
+          
+          <button
+            type="button"
+            className="add-toCart-btn"
+            onClick={this.addToCart}
+          >
+            ADD TO CART
+          </button>
          
           <div className="product-information" dangerouslySetInnerHTML={{__html: `${product.description}`}} />
         </div>

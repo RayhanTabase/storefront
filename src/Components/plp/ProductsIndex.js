@@ -8,6 +8,7 @@ class ProductsIndex extends Component {
   constructor(props){
     super(props)
     this.state={
+      displayNumber:6,
       products: [],
       selectedCurrency: null,
       pageNumber: 1,
@@ -15,12 +16,25 @@ class ProductsIndex extends Component {
     };
   };
 
-  displayProducts = () => {
-    var data = this.props.data;
+  changePage = (num) => {
+    if (this.state.pageNumber + num < 1) return;
+    const data = this.props.data;
     if (data.loading) return;
     if (!data.category) return;
     const products = data.category.products;
-    const pagProducts = products.slice((this.state.pageNumber - 1) * 6, this.state.pageNumber * 6);
+    if (this.state.pageNumber * this.state.displayNumber >= products.length && num > 0 ) return;
+    this.setState((prevState) => ({
+      ...prevState,
+      pageNumber:prevState.pageNumber + num
+    }))
+  }
+ 
+  displayProducts = () => {
+    const data = this.props.data;
+    if (data.loading) return;
+    if (!data.category) return;
+    const products = data.category.products;
+    const pagProducts = products.slice((this.state.pageNumber - 1) * this.state.displayNumber, this.state.pageNumber * this.state.displayNumber);
     return pagProducts.map((product) => {
       const productInCart = this.state.cart.find((cartProduct) => cartProduct.id === product.id )
       const isInCart = productInCart === undefined ? false : true;
@@ -36,34 +50,25 @@ class ProductsIndex extends Component {
   }
 
   componentDidMount = () => {
-    store.subscribe(() => {
-      const { currencyReducer, cartReducer } = store.getState();
-      const { currencyType } = currencyReducer;
-      const { cart } = cartReducer;
-      this.setState((prevState) => ({
-        ...prevState,
-        selectedCurrency: currencyType,
-        cart:cart
-      }))
-    });
     const { currencyReducer, cartReducer } = store.getState();
     const { currencyType } = currencyReducer;
     const { cart } = cartReducer;
-    if (this.state.selectedCurrency !== currencyType) {
-      this.setState((prevState) => ({
-        ...prevState,
-        selectedCurrency: currencyType,
-      }))
-    }
-    if (this.state.cart !== cart ) {
-      this.setState((prevState) => ({
-        ...prevState,
-        cart:cart
-      }))
-    }
+    this.setState((prevState) => ({
+      ...prevState,
+      selectedCurrency: currencyType,
+      cart:cart
+    }))
   }
 
-  componentDidUpdate = () => {
+  componentDidUpdate = (prevProps) => {
+    const isSameCategory = prevProps.categoryName === this.props.categoryName
+    if(isSameCategory === false) {
+      this.setState((prevState) => ({
+        ...prevState,
+        pageNumber: 1
+      }))
+    }
+    
     const { currencyReducer, cartReducer } = store.getState();
     const { currencyType } = currencyReducer;
     const { cart } = cartReducer;
@@ -83,9 +88,25 @@ class ProductsIndex extends Component {
 
   render() {
     return (
-      <div className="category-products">
-        { this.displayProducts() }
-      </div>
+      <>
+        <div className="category-products">
+          { this.displayProducts() }
+        </div>
+        <div className="pagnition">
+          <button
+            type="button"
+            onClick={() => this.changePage(-1)}
+          >
+            Prev
+          </button>
+          <button
+            type="button"
+            onClick={() => this.changePage(1)}
+          >
+            Next
+          </button>
+        </div>
+      </>
     )
   }
 }
