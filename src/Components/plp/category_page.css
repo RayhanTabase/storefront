@@ -23,6 +23,11 @@
   max-height: 27.75rem;
   padding: 1rem;
   text-decoration: none;
+  box-sizing: border-box;
+}
+
+.plp-content .category-products .card-shadow {
+  box-shadow: 0 4px 35px rgba(168, 172, 176, 0.19);
 }
 
 .plp-content .category-products .product-card:hover {
@@ -74,6 +79,6 @@
    width: 3.25rem;
    height: 3.25rem;
    position: absolute;
-   margin-left: 20.5rem;
+   margin-left: 18.5rem;
    margin-top: 19.67rem;
 }

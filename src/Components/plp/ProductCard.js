@@ -20,7 +20,7 @@ class ProductCard extends Component {
     }
     const imageSource = this.props.product.gallery[0];
     return (
-      <div className={`${!this.props.product.inStock && 'fade-content'}`}>
+        <div className={`product-card  ${!this.props.product.inStock && 'fade-content'} ${this.props.isInCart && 'card-shadow'}`}>
         {
           !this.props.product.inStock && 
           <div className="product-outOfStock"> 
@@ -55,7 +55,6 @@ class ProductCard extends Component {
     return (
       <NavLink
         to = {`/description/`}
-        className = "product-card"
         onClick={this.changeProductPage}
       >
         {this.displayProduct()}

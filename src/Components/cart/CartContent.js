@@ -92,7 +92,7 @@ class CartPage extends Component {
           <>
           <p className="tax">
             <span className="text">
-              Tax
+              Tax:
             </span>
             <span className="amount">
               {this.state.selectedCurrency && this.state.selectedCurrency.symbol}
@@ -102,7 +102,7 @@ class CartPage extends Component {
         
           <p className="quantity">
             <span className="text">
-              Qty
+              Qty:
             </span>
             <span className="amount">
               {this.props.cart.length}
@@ -113,6 +113,9 @@ class CartPage extends Component {
           <p className="cart-total">
             <span className="text">
               Total
+              { this.props.page === 'full' &&
+                ':'
+              }
             </span>
             <span className="amount">
               {this.state.selectedCurrency && this.state.selectedCurrency.symbol}

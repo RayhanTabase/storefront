@@ -19,7 +19,11 @@ const reducer = (state = initialState, action) => {
     case REMOVE_FROM_CART:
       return {
         ...state,
-        cart: state.cart.filter((product) => product.id !== action.payload),
+        cart: [...state.cart.filter((product) => {
+          if (product.id !== action.payload.id ||  JSON.stringify(product.attributes) !== JSON.stringify(action.payload.attributes)) {
+            return product;
+          };
+        })],
       };
 
     case ADD_QUANTITY:
