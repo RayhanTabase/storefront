@@ -1,37 +1,22 @@
 import React, { Component} from 'react';
 import './mini_cart.css';
 import store from '../../redux/configureStore';
-// import { show_minicart } from '../../redux/navigation/actions';
 
 class MiniCartContainer extends Component {
   constructor(props){
     super(props)
-    // this.wrapperRef = React.createRef();
-    // this.handleClickOutside = this.handleClickOutside.bind(this);
     this.state = {
       cart: []
     }
   };
 
-  // handleClickOutside(event) {
-  //   if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
-  //     if (event.target.className.includes('cartMenuBtn')) return;
-  //     store.dispatch(show_minicart())
-  //   }
-  // }
-
   componentDidMount = () => {
-    // document.addEventListener("mousedown", this.handleClickOutside);    
     const { cartReducer } = store.getState();
     const { cart } = cartReducer;
     this.setState((prevState) => ({
       ...prevState,
       cart: cart,
     }))
-  }
-
-  componentWillUnmount() {
-    // document.removeEventListener("mousedown", this.handleClickOutside);
   }
 
   componentDidUpdate = () => {
@@ -48,7 +33,6 @@ class MiniCartContainer extends Component {
   render() {
     return (
       <div 
-        // ref={this.wrapperRef}
         className="display-mini-cart"
       >
          <p className="header">
