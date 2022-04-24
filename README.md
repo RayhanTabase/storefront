@@ -3,6 +3,11 @@
  - fetch data from the GraphQL endpoint and to provide an interface to view and interact with this data
 
 ## Snapshots
+![preview](./snapshots/pl.jpeg)
+![preview](./snapshots/desc1.jpeg)
+![preview](./snapshots/desc2.jpeg)
+![preview](./snapshots/cart.jpeg)
+![preview](./snapshots/overlay.jpeg)
 
 
 ## Built With
