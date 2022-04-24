@@ -39,7 +39,6 @@ class CartProduct extends Component {
   }
 
   componentDidMount = () => {
-    console.log('a', this.props)
     this.updateTotal();
   }
 
@@ -48,6 +47,8 @@ class CartProduct extends Component {
   }
 
   componentDidUpdate = (prevProps, prevState) => {
+    console.log(prevState, prevProps, this.props)
+    if (prevProps.data.loading !== this.props.data.loading) this.updateTotal();
     if (prevState.total === this.state.total && JSON.stringify(prevProps.selectedCurrency) === JSON.stringify(this.props.selectedCurrency)) return;
     this.updateTotal();
   }
