@@ -82,3 +82,8 @@
    margin-left: 18.5rem;
    margin-top: 19.67rem;
 }
+
+.pagnition {
+  display: flex;
+  gap: 0.5rem;
+}

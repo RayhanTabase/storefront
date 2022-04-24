@@ -6,16 +6,10 @@ import { getCategories } from '../../Apollo';
 
 
 class Category extends Component {
-  constructor(props){
-    super(props)  
-    this.state={
-      categoryName: ''
-    };
-  };
 
   useCategory = () => {
     if (this.props.categoryName !== '') return this.props.categoryName;
-    var data = this.props.data;
+    const data = this.props.data;
     if (data.loading) return '';
     return data.categories[0].name;
   }

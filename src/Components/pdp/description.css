@@ -98,8 +98,8 @@
 }
 
 .product-description .product-details .product-attributes .product-attribute-section .attribute-value-color {
-  width: 3.938rem;
-  height: 2.813rem;
+  width: 2rem;
+  height: 2rem;
   opacity: 0.5;
   border: 1px solid rgb(189, 189, 189);
 }

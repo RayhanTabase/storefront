@@ -68,7 +68,6 @@ class ProductsIndex extends Component {
         pageNumber: 1
       }))
     }
-    
     const { currencyReducer, cartReducer } = store.getState();
     const { currencyType } = currencyReducer;
     const { cart } = cartReducer;
@@ -99,6 +98,7 @@ class ProductsIndex extends Component {
           >
             Prev
           </button>
+          <p>{this.state.pageNumber}</p>
           <button
             type="button"
             onClick={() => this.changePage(1)}

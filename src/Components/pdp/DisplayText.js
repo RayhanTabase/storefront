@@ -1,12 +1,6 @@
 import React, { Component} from 'react';
 
 class DisplayText extends Component {
-  constructor(props){
-    super(props)  
-    this.state={
-      selectedAttribute : null,
-    };
-  };
 
   displayList = () => {
     return this.props.attribute.items.map((item) =>{

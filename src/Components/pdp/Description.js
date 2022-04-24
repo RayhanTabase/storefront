@@ -60,7 +60,7 @@ class Description extends Component {
       return;
     }
     store.dispatch(add_to_cart({id: product_id, attributes: this.state.selectedAttributes, quantity:1 }));
-    // success message, create component
+    // success message
     alert(`Successfully added ${data.product.name} to cart`)
   }
 
@@ -215,7 +215,8 @@ export default graphql(getDescription, {
     return {
       variables: {
         id: props.product_id
-      }
+      },
+      // nextFetchPolicy: 'no-cache'
     }
   }
 })(Description);

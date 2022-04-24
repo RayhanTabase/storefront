@@ -5,12 +5,7 @@ import { NavLink } from 'react-router-dom';
 
 
 class CategoryLink extends Component {
-  constructor(props){
-    super(props)  
-    this.state={
-    }
-  };
-
+  
   changeCategory = (name) => {
     store.dispatch(change_category_type(name));
   };

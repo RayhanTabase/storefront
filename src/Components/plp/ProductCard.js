@@ -59,7 +59,6 @@ class ProductCard extends Component {
       >
         {this.displayProduct()}
       </NavLink>
-      
     )
   }
 }

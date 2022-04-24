@@ -39,6 +39,7 @@ class CartProduct extends Component {
   }
 
   componentDidMount = () => {
+    console.log('a', this.props)
     this.updateTotal();
   }
 
@@ -57,9 +58,12 @@ class CartProduct extends Component {
 
   reduceQuantity = () => {
     if (this.props.product.quantity - 1 < 1) {
-      store.dispatch(remove_from_cart({id: this.props.product.id, attributes: this.props.product.attributes, quantity: this.props.product.quantity}))
-    };
-    store.dispatch(decrease_quantity({id: this.props.product.id, attributes: this.props.product.attributes, quantity: this.props.product.quantity}));
+      if (window.confirm('Are you sure you want to delete item from cart?')) {
+        store.dispatch(remove_from_cart({id: this.props.product.id, attributes: this.props.product.attributes, quantity: this.props.product.quantity}));
+      }
+    } else {
+      store.dispatch(decrease_quantity({id: this.props.product.id, attributes: this.props.product.attributes, quantity: this.props.product.quantity}));
+    }
   }
 
   changeImage = (num) => {
@@ -207,7 +211,8 @@ export default graphql(getItem, {
     return {
       variables: {
         id: props.product.id
-      }
+      },
+      // nextFetchPolicy: 'no-cache'
     }
   }
 })(CartProduct);

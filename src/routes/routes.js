@@ -1,5 +1,4 @@
 import React, { Component} from 'react';
-import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import store from '../redux/configureStore';
 import Category from '../Components/PLP/Category';
@@ -30,17 +29,15 @@ class AppRoutes extends Component {
 
   render() {
     return (
-      <Suspense>
-        <Routes>
-          <Route path="/" element={<Category categoryName={this.state.categoryName} />} />
-          {
-            this.state.product_id !== '' &&
-            <Route exact path="/description" element={<Description product_id={this.state.product_id} />} />
-          }
-          <Route path="/cart" element={<Cart page={'full'} />}/>
-          <Route path="/*" element={<Category categoryName={this.state.categoryName} />}/>
-        </Routes>
-      </Suspense>
+      <Routes>
+        <Route path="/" element={<Category categoryName={this.state.categoryName} />} />
+        {
+          this.state.product_id !== '' &&
+          <Route exact path="/description" element={<Description product_id={this.state.product_id} />} />
+        }
+        <Route path="/cart" element={<Cart page={'full'} />}/>
+        <Route path="/*" element={<Category categoryName={this.state.categoryName} />}/>
+      </Routes>
     )
   }
 }
