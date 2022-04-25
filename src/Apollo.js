@@ -40,8 +40,18 @@ export const getProducts = gql`
         name,
         inStock,
         gallery,
+        attributes {
+          id,
+          name,
+          type,
+          items {
+            displayValue,
+            value,
+            id
+          }
+        },
         prices{
-          currency{
+          currency {
             label,
             symbol
           },
@@ -61,7 +71,7 @@ query ($id: String!){
     gallery,
     description,
     category,
-    attributes{
+    attributes {
       id,
       name,
       type,
@@ -72,7 +82,7 @@ query ($id: String!){
       }
     },
     prices {
-      currency{
+      currency {
         label,
         symbol
       },
@@ -101,7 +111,7 @@ query ($id: String!){
       }
     },
     prices {
-      currency{
+      currency {
         label,
         symbol
       },

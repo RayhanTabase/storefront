@@ -18,8 +18,17 @@ class Header extends Component {
         selectedCurrency : null,
         availableCurrencies: [],
         showCurrencyPicker: false,
-        cart: []
+        cart: [],
     };
+  }
+
+  getCartTotalQuantity = () => {
+    const { cart } = this.state;
+    let count = 0;
+    cart.forEach((product) => {
+      count += product.quantity;
+    });
+    return count;
   }
 
   setCurrency = () => {
@@ -89,9 +98,9 @@ class Header extends Component {
             <li className="shopping-cart cartMenuBtn">
               <div className="cart-items-number cartMenuBtn">
                 {
-                  this.state.cart.length > 0 && 
+                  this.getCartTotalQuantity() > 0 && 
                   <p className="bullet cartMenuBtn">
-                    {this.state.cart.length}
+                    {this.getCartTotalQuantity()}
                   </p>
                 }
               </div>

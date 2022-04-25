@@ -53,8 +53,6 @@ class CartProduct extends Component {
   }
 
   addQuantity = () => {
-    const { inStock } = this.props.data.product;
-    if (!inStock) return;
     store.dispatch(add_quantity({id: this.props.product.id, attributes: this.props.product.attributes, quantity: this.props.product.quantity}));
   }
 
@@ -113,7 +111,7 @@ class CartProduct extends Component {
           <p className="name">
             {name}
           </p>
-          <p className="price">
+          <p className={`price ${!inStock && 'strikeThroughText'}`}>
             <span className="symbol">
               {price.currency.symbol}
             </span>
@@ -154,12 +152,7 @@ class CartProduct extends Component {
               +
             </button>
             <p className="text">
-              {
-                inStock ?
-                  this.props.product.quantity
-                :
-                  0
-              }
+              { this.props.product.quantity }
             </p>
             <button
               type="button"

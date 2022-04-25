@@ -42,18 +42,9 @@
 
 
 .display-mini-cart .cart-product-card {
-  display: none;
+  display: flex;
   justify-content: space-between;
   margin-bottom: 3rem;
-}
-
-.display-mini-cart .cart-product-card:last-child {
-  margin-bottom: 0;
-}
-
-.display-mini-cart .cart-product-card:nth-child(4),
-.display-mini-cart .cart-product-card:nth-child(2) {
-  display: flex;
 }
 
 .display-mini-cart .cart-product-card .section1 {

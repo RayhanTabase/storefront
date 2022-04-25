@@ -6,7 +6,7 @@ class MiniCartContainer extends Component {
   constructor(props){
     super(props)
     this.state = {
-      cart: []
+      cart: [],
     };
   }
 
@@ -35,10 +35,6 @@ class MiniCartContainer extends Component {
       <div 
         className="display-mini-cart"
       >
-         <p className="header">
-            <span className="title">My Bag,</span>
-            <span className="count">{this.state.cart.length} items</span>
-          </p>
         {this.props.children}
       </div>
     )

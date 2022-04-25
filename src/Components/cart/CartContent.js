@@ -38,6 +38,15 @@ class CartPage extends Component {
     return total.toFixed(2);
   }
 
+  getCartTotalQuantity = () => {
+    let count = 0;
+    const { cart } = this.props;
+    cart.forEach((product) => {
+      count += product.quantity;
+    });
+    return count;
+  }
+
   componentDidMount = () => {
     store.subscribe(() => {
       const { currencyReducer } = store.getState();
@@ -73,13 +82,17 @@ class CartPage extends Component {
   }
  
   render() {
-    const { page , cart } = this.props;
+    const { page } = this.props;
     const { selectedCurrency } = this.state;
     return (
       <>
         {
           page === 'mini' ?
           <>
+            <p className="header">
+              <span className="title">My Bag,</span>
+              <span className="count">{this.getCartTotalQuantity()} items</span>
+            </p>
             {this.displayCartProducts()}
           </>
           :
@@ -108,7 +121,7 @@ class CartPage extends Component {
               Qty:
             </span>
             <span className="amount">
-              {cart.length}
+              {this.getCartTotalQuantity()}
             </span>
           </p>
           </>
