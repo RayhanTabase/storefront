@@ -31,7 +31,6 @@ class DisplayText extends Component {
             >
               {item.value}
             </button>
-
         }
         </div>
       )

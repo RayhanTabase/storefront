@@ -6,12 +6,12 @@ import CartProduct from './CartProduct';
 
 class CartPage extends Component {
   constructor(props){
-    super(props)  
+    super(props)
     this.state={
       selectedCurrency: null,
       recordedAmounts: {},
     };
-  };
+  }
 
   addToTotal = (id, value) => {
     this.setState((prevState) => ({
@@ -45,7 +45,7 @@ class CartPage extends Component {
       this.setState((prevState) => ({
         ...prevState,
         selectedCurrency: currencyType,
-      }))
+      }));
     });
   }
 
@@ -56,11 +56,12 @@ class CartPage extends Component {
     this.setState((prevState) => ({
       ...prevState,
       selectedCurrency: currencyType,
-    }))
+    }));
   }
 
   displayCartProducts = () => {
-    return this.props.cart.map((product) => 
+    const { cart } = this.props;
+    return cart.map((product) => 
       <CartProduct
         key={`${product.id} ${JSON.stringify(product)}`}
         product={product}
@@ -72,10 +73,12 @@ class CartPage extends Component {
   }
  
   render() {
+    const { page , cart } = this.props;
+    const { selectedCurrency } = this.state;
     return (
       <>
         {
-          this.props.page === 'mini' ?
+          page === 'mini' ?
           <>
             {this.displayCartProducts()}
           </>
@@ -95,7 +98,7 @@ class CartPage extends Component {
               Tax:
             </span>
             <span className="amount">
-              {this.state.selectedCurrency && this.state.selectedCurrency.symbol}
+              {selectedCurrency && selectedCurrency.symbol}
               0
             </span>
           </p>
@@ -105,7 +108,7 @@ class CartPage extends Component {
               Qty:
             </span>
             <span className="amount">
-              {this.props.cart.length}
+              {cart.length}
             </span>
           </p>
           </>
@@ -113,17 +116,17 @@ class CartPage extends Component {
           <p className="cart-total">
             <span className="text">
               Total
-              { this.props.page === 'full' &&
+              { page === 'full' &&
                 ':'
               }
             </span>
             <span className="amount">
-              {this.state.selectedCurrency && this.state.selectedCurrency.symbol}
+              {selectedCurrency && selectedCurrency.symbol}
               {this.getToTalCart()}
             </span>
           </p>
           <div className="cart-buttons">
-            { this.props.page === 'mini' &&
+            { page === 'mini' &&
               <div className="d-flex-col view-bag-link">
                 <NavLink
                   to = {`/cart`}
@@ -135,7 +138,7 @@ class CartPage extends Component {
             }
             <button type="button" className="checkout-btn">
               {
-              this.props.page === 'mini' ?
+              page === 'mini' ?
                 'CHECK OUT'
               :
                 'ORDER'

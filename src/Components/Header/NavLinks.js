@@ -12,14 +12,14 @@ class NavLinks extends Component {
       selectedCategory : '',
       categories:[],
     };
-  };
+  }
 
   loadCategories = () => {
     const data = this.props.data;
     if (data.loading) return;
     if (data.categories.length === this.state.categories.length) return;
     if (this.state.selectedCategory === '') {
-      store.dispatch(change_category_type(data.categories[0].name))
+      store.dispatch(change_category_type(data.categories[0].name));
     };
     this.setState((prevState) => ({
       ...prevState,
@@ -45,7 +45,7 @@ class NavLinks extends Component {
       this.setState((prevState) => ({
         ...prevState,
         selectedCategory: categoryName,
-      }))
+      }));
     });
   }
 

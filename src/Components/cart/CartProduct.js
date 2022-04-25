@@ -14,19 +14,19 @@ class CartProduct extends Component {
       selectedAttributes: {},
       imageSourceNumber:0
     };
-  };
+  }
 
   getTotalPrice = () => {
     const data = this.props.data;
     if (data.loading) return 0;
-    const product = data.product
+    const product = data.product;
     if (!product.inStock) return 0;
     let price = product.prices[0];
     if (this.props.selectedCurrency) {
       price = product.prices.find((price) => (price.currency.label === this.props.selectedCurrency.label));
     }
     const total = price.amount * this.props.product.quantity;
-    return total.toFixed(2)
+    return total.toFixed(2);
   }
 
   updateTotal = () => {
@@ -35,7 +35,7 @@ class CartProduct extends Component {
     this.setState((prevState) => ({
       ...prevState,
       total: newTotal
-    }))
+    }));
   }
 
   componentDidMount = () => {
@@ -47,13 +47,14 @@ class CartProduct extends Component {
   }
 
   componentDidUpdate = (prevProps, prevState) => {
-    console.log(prevState, prevProps, this.props)
     if (prevProps.data.loading !== this.props.data.loading) this.updateTotal();
     if (prevState.total === this.state.total && JSON.stringify(prevProps.selectedCurrency) === JSON.stringify(this.props.selectedCurrency)) return;
     this.updateTotal();
   }
 
   addQuantity = () => {
+    const { inStock } = this.props.data.product;
+    if (!inStock) return;
     store.dispatch(add_quantity({id: this.props.product.id, attributes: this.props.product.attributes, quantity: this.props.product.quantity}));
   }
 
@@ -70,43 +71,38 @@ class CartProduct extends Component {
   changeImage = (num) => {
     const data = this.props.data;
     if (data.loading) return '';
-    const images = data.product.gallery
+    const images = data.product.gallery;
     let nextImageNumber = this.state.imageSourceNumber + num;
     if (nextImageNumber >= images.length) {
       this.setState((prevState) => ({
         ...prevState,
         imageSourceNumber: 0
-      }))
+      }));
     }
-
     else if (nextImageNumber < 0) {
       this.setState((prevState) => ({
         ...prevState,
         imageSourceNumber: images.length - 1
-      }))
+      }));
     }
-
     else {
       this.setState((prevState) => ({
         ...prevState,
         imageSourceNumber: nextImageNumber
-      }))
+      }));
     }
   }
 
   displayProduct = () => {
     const data = this.props.data;
     if (data.loading) return '';
-    const product = data.product
-    
+    const product = data.product;
     let price = product.prices[0];
     if (this.props.selectedCurrency) {
       price = product.prices.find((price) => (price.currency.label === this.props.selectedCurrency.label));
     }
-    const brand = product.brand;
-    const name = product.name;
-    const imageSource = product.gallery[this.state.imageSourceNumber];
-    const attributes = product.attributes;
+    const { name, brand, gallery, attributes, inStock } = product;
+    const imageSource = gallery[this.state.imageSourceNumber];
     const selectedAttributes = this.props.product.attributes;
     return (
       <div className="cart-product-card">
@@ -158,7 +154,12 @@ class CartProduct extends Component {
               +
             </button>
             <p className="text">
-              {this.props.product.quantity}
+              {
+                inStock ?
+                  this.props.product.quantity
+                :
+                  0
+              }
             </p>
             <button
               type="button"
@@ -167,9 +168,9 @@ class CartProduct extends Component {
               –
             </button>
           </div>
-          <div className={`${!product.inStock && 'fade-content'} product-image`}>
+          <div className={`${!inStock && 'fade-content'} product-image`}>
             {
-              !product.inStock && 
+              !inStock && 
               <div className="product-outOfStock"> 
                 <p>
                   out of stock

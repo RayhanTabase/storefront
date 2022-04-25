@@ -9,8 +9,8 @@ class App extends Component {
     super(props)
     this.state = {
       showMiniCart: false
-    }
-  };
+    };
+  }
 
   componentDidMount = () => {
     store.subscribe(() => {
@@ -18,9 +18,9 @@ class App extends Component {
       const { showMiniCart } = navigationReducer;
       this.setState((prevState) => ({
         ...prevState,
-        showMiniCart: showMiniCart,
-      }))
-    })
+        showMiniCart,
+      }));
+    });
   }
 
   componentDidUpdate = () => {
@@ -29,8 +29,8 @@ class App extends Component {
     if (this.state.showMiniCart !== showMiniCart) {
       this.setState((prevState) => ({
         ...prevState,
-        showMiniCart: showMiniCart,
-      }))
+        showMiniCart,
+      }));
     }
   }
 
@@ -40,7 +40,7 @@ class App extends Component {
       <div>
         <Header />
         <div>
-          <div className={`${this.state.showMiniCart === true && 'darken-main-content'}`}/>
+          <div className={`${this.state.showMiniCart === true && 'darken-main-content'}`} />
           <AppRoutes />
         </div>
       </div>

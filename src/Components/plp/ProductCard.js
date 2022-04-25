@@ -12,17 +12,16 @@ class ProductCard extends Component {
   }
 
   displayProduct = () =>{
-    const name = this.props.product.name;
-    const prices = this.props.product.prices;
+    const { name, prices, gallery, inStock} = this.props.product;
     let price = prices[0];
     if (this.props.selectedCurrency) {
       price = prices.find((price) => (price.currency.label === this.props.selectedCurrency.label));
     }
-    const imageSource = this.props.product.gallery[0];
+    const imageSource = gallery[0];
     return (
-        <div className={`product-card  ${!this.props.product.inStock && 'fade-content'} ${this.props.isInCart && 'card-shadow'}`}>
+        <div className={`product-card  ${!inStock && 'fade-content'} ${this.props.isInCart && 'card-shadow'}`}>
         {
-          !this.props.product.inStock && 
+          !inStock && 
           <div className="product-outOfStock"> 
             <p>
               out of stock

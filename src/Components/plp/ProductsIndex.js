@@ -26,23 +26,24 @@ class ProductsIndex extends Component {
     this.setState((prevState) => ({
       ...prevState,
       pageNumber:prevState.pageNumber + num
-    }))
+    }));
   }
  
   displayProducts = () => {
     const data = this.props.data;
     if (data.loading) return;
     if (!data.category) return;
-    const products = data.category.products;
-    const pagProducts = products.slice((this.state.pageNumber - 1) * this.state.displayNumber, this.state.pageNumber * this.state.displayNumber);
+    const { products } = data.category;
+    const { pageNumber, displayNumber, cart, selectedCurrency} = this.state;
+    const pagProducts = products.slice((pageNumber - 1) * displayNumber, pageNumber * displayNumber);
     return pagProducts.map((product) => {
-      const productInCart = this.state.cart.find((cartProduct) => cartProduct.id === product.id )
+      const productInCart = cart.find((cartProduct) => cartProduct.id === product.id );
       const isInCart = productInCart === undefined ? false : true;
       return (
         <ProductCard
           key={product.id}
           product={product}
-          selectedCurrency={this.state.selectedCurrency}
+          selectedCurrency={selectedCurrency}
           isInCart={isInCart}
         />
       )
@@ -56,17 +57,17 @@ class ProductsIndex extends Component {
     this.setState((prevState) => ({
       ...prevState,
       selectedCurrency: currencyType,
-      cart:cart
-    }))
+      cart
+    }));
   }
 
   componentDidUpdate = (prevProps) => {
-    const isSameCategory = prevProps.categoryName === this.props.categoryName
+    const isSameCategory = prevProps.categoryName === this.props.categoryName;
     if(isSameCategory === false) {
       this.setState((prevState) => ({
         ...prevState,
         pageNumber: 1
-      }))
+      }));
     }
     const { currencyReducer, cartReducer } = store.getState();
     const { currencyType } = currencyReducer;
@@ -75,13 +76,13 @@ class ProductsIndex extends Component {
       this.setState((prevState) => ({
         ...prevState,
         selectedCurrency: currencyType,
-      }))
+      }));
     }
     if (this.state.cart !== cart ) {
       this.setState((prevState) => ({
         ...prevState,
-        cart:cart
-      }))
+        cart
+      }));
     }
   }
 

@@ -11,16 +11,17 @@ class CategoryLink extends Component {
   };
 
   render() {
+    const { category, selectedCategory } = this.props;
     return (
       <li
-        className={`${this.props.category.name === this.props.selectedCategory && 'active-link'} nav-link`}
+        className={`${category.name === selectedCategory && 'active-link'} nav-link`}
       >
       <NavLink
-        onClick={()=> this.changeCategory(this.props.category.name)}
+        onClick={()=> this.changeCategory(category.name)}
         to="/"
         className="nav-btn"
       >
-        {this.props.category.name}
+        {category.name}
       </NavLink>
       </li>
     );

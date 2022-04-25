@@ -6,23 +6,21 @@ import Cart from './Cart';
 import './mini_cart.css';
 import MiniCartContainer from './MiniCartContainer';
 
-
-
 class CartButton extends Component {
   constructor(props){
     super(props)
     this.state = {
       showMiniCart: false
-    }
-  };
+    };
+  }
 
   componentDidMount = () => {
     const { navigationReducer } = store.getState();
     const { showMiniCart } = navigationReducer;
     this.setState((prevState) => ({
       ...prevState,
-      showMiniCart: showMiniCart,
-    }))
+      showMiniCart,
+    }));
   }
 
   componentDidUpdate = () => {
@@ -31,8 +29,8 @@ class CartButton extends Component {
     if (this.state.showMiniCart !== showMiniCart) {
       this.setState((prevState) => ({
         ...prevState,
-        showMiniCart: showMiniCart,
-      }))
+        showMiniCart,
+      }));
     }
   }
 
@@ -41,6 +39,7 @@ class CartButton extends Component {
   }
 
   render() {
+    const { showMiniCart } = this.state;
     return (
       <>
         <button
@@ -51,9 +50,9 @@ class CartButton extends Component {
           <img className="cartMenuBtn" src={emptyCart} alt="empty cart"/>
         </button>
         {
-          this.state.showMiniCart &&
+          showMiniCart &&
           <MiniCartContainer>
-            <Cart page={'mini'} />
+            <Cart page="mini" />
           </MiniCartContainer>
         }
       </>

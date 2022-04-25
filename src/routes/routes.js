@@ -1,43 +1,46 @@
 import React, { Component} from 'react';
+import { Suspense } from 'react';
 import { Route, Routes } from 'react-router-dom';
 import store from '../redux/configureStore';
 import Category from '../Components/PLP/Category';
 import Description from '../Components/PDP/Description';
-import Cart from '../Components/cart/Cart';
+import Cart from '../Components/Cart/Cart';
 
 class AppRoutes extends Component {
   constructor(props){
     super(props)  
     this.state={
-      product_id: '',
+      productId: '',
       categoryName: '',
     };
-  };
+  }
 
   componentDidMount = () => {
     store.subscribe(() => {
       const { navigationReducer, categoryReducer } = store.getState();
-      const { product_id } = navigationReducer;
+      const { productId } = navigationReducer;
       const { categoryName } = categoryReducer;
       this.setState((prevState) => ({
         ...prevState,
-        product_id: product_id,
-        categoryName: categoryName,
-      }))
+        productId,
+        categoryName,
+      }));
     });
   }
 
   render() {
     return (
-      <Routes>
-        <Route path="/" element={<Category categoryName={this.state.categoryName} />} />
-        {
-          this.state.product_id !== '' &&
-          <Route exact path="/description" element={<Description product_id={this.state.product_id} />} />
-        }
-        <Route path="/cart" element={<Cart page={'full'} />}/>
-        <Route path="/*" element={<Category categoryName={this.state.categoryName} />}/>
-      </Routes>
+      <Suspense>
+        <Routes>
+          <Route path="/" element={<Category categoryName={this.state.categoryName} />} />
+          {
+            this.state.productId !== '' &&
+            <Route exact path="/description" element={<Description productId={this.state.productId} />} />
+          }
+          <Route path="/cart" element={<Cart page="full" />} />
+          <Route path="/*" element={<Category categoryName={this.state.categoryName} />} />
+        </Routes>
+      </Suspense>
     )
   }
 }

@@ -7,15 +7,15 @@ class MiniCartContainer extends Component {
     super(props)
     this.state = {
       cart: []
-    }
-  };
+    };
+  }
 
   componentDidMount = () => {
     const { cartReducer } = store.getState();
     const { cart } = cartReducer;
     this.setState((prevState) => ({
       ...prevState,
-      cart: cart,
+      cart
     }))
   }
 
@@ -25,8 +25,8 @@ class MiniCartContainer extends Component {
     if (this.state.cart.length !== cart.length) {
       this.setState((prevState) => ({
         ...prevState,
-        cart: cart,
-      }))
+        cart
+      }));
     }
   }
 

@@ -15,7 +15,7 @@ class MiniCart extends Component {
       cart : [],
       cartTotal: 0
     };
-  };
+  }
 
   addToTotal = (amount) => {
     this.setState((prevState) => ({
@@ -27,7 +27,6 @@ class MiniCart extends Component {
   handleClickOutside(event) {
     if (this.wrapperRef && !this.wrapperRef.current.contains(event.target)) {
       if (event.target.className.includes('cartMenuBtn')) return;
-
       this.props.showMiniCart();
     }
   }
@@ -41,7 +40,7 @@ class MiniCart extends Component {
       ...prevState,
       cart: cart,
       selectedCurrency: currencyType,
-    }))
+    }));
   }
 
   componentDidUpdate = () => {
@@ -51,8 +50,8 @@ class MiniCart extends Component {
     if (this.state.cart.length !== cart.length) {
       this.setState((prevState) => ({
         ...prevState,
-        cart: cart,
-      }))
+        cart
+      }));
     }
 
     if (this.state.selectedCurrency !== currencyType) {
@@ -60,7 +59,7 @@ class MiniCart extends Component {
         ...prevState,
         selectedCurrency: currencyType,
         cartTotal: 0
-      }))
+      }));
     }
   }
 
@@ -75,7 +74,6 @@ class MiniCart extends Component {
   render() {
     return (
       <div 
-        
         ref={this.wrapperRef}
       >
         {

@@ -8,7 +8,7 @@ import brandLogo from '../../assets/brand_icon.svg';
 import dropDown from '../../assets/drop_down.svg';
 import dropUp from '../../assets/drop_up.svg';
 import NavLinks from './NavLinks';
-import CartButton from '../cart/CartButton';
+import CartButton from '../Cart/CartButton';
 import ChangeCurrencyMenu from './ChangeCurrencyMenu';
 
 class Header extends Component {
@@ -54,8 +54,8 @@ class Header extends Component {
       this.setState((prevState) => ({
         ...prevState,
         selectedCurrency: currencyType,
-        cart: cart
-      }))
+        cart
+      }));
     });
   }
 

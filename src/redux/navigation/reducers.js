@@ -1,7 +1,7 @@
 import { CHANGE_PRODUCT, SHOW_MINICART } from './constants';
 
 const initialState = {
-  product_id: '',
+  productId: '',
   showMiniCart: false
 };
 
@@ -10,7 +10,7 @@ const reducer = (state = initialState, action) => {
     case CHANGE_PRODUCT:
       return {
         ...state,
-        product_id: action.payload
+        productId: action.payload
       };
     case SHOW_MINICART:
       return {

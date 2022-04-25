@@ -16,7 +16,7 @@ class Description extends Component {
       selectedCurrency: null,
       cart : []
     };
-  };
+  }
 
   addAttribute = (id, value) => {
     this.setState((prevState) => ({
@@ -46,28 +46,28 @@ class Description extends Component {
   addToCart = () => {
     //check attributes selected
     if ( !this.checkAttrubutesSelected()) {
-      // error message
+      // error message, select all attributes
       alert('Please make a selection for all product attributes');
       return;
     }
     const data = this.props.data;
     if (data.loading) return;
-    const product_id = data.product.id
-    console.log(this.state.cart);
-    let item = this.state.cart.find((item) => JSON.stringify(item.attributes) === JSON.stringify(this.state.selectedAttributes) && item.id === this.props.product_id)
+    const productId = data.product.id;
+    let item = this.state.cart.find((item) => JSON.stringify(item.attributes) === JSON.stringify(this.state.selectedAttributes) && item.id === this.props.productId);
     if (item !== undefined) {
-      alert('This item is already in the cart')
+      // already in cart message
+      alert('This item is already in the cart');
       return;
     }
-    store.dispatch(add_to_cart({id: product_id, attributes: this.state.selectedAttributes, quantity:1 }));
+    store.dispatch(add_to_cart({id: productId, attributes: this.state.selectedAttributes, quantity:1 }));
     // success message
-    alert(`Successfully added ${data.product.name} to cart`)
+    alert(`Successfully added ${data.product.name} to cart`);
   }
 
   loadDescription = () => {
-    var data = this.props.data;
+    const data = this.props.data;
     if (data.loading) return '';
-    const product = data.product
+    const product = data.product;
     let price = product.prices[0];
     if (this.state.selectedCurrency !== null) {
       price = product.prices.find((price) => (price.currency.label === this.state.selectedCurrency.label));
@@ -163,8 +163,8 @@ class Description extends Component {
       this.setState((prevState) => ({
         ...prevState,
         selectedCurrency: currencyType,
-        cart:cart
-      }))
+        cart
+      }));
     });
     const { currencyReducer, cartReducer } = store.getState();
     const { currencyType } = currencyReducer;
@@ -173,13 +173,13 @@ class Description extends Component {
       this.setState((prevState) => ({
         ...prevState,
         selectedCurrency: currencyType,
-      }))
+      }));
     }
     if (this.state.cart !== cart ) {
       this.setState((prevState) => ({
         ...prevState,
-        cart:cart
-      }))
+        cart
+      }));
     }
   }
 
@@ -191,13 +191,13 @@ class Description extends Component {
       this.setState((prevState) => ({
         ...prevState,
         selectedCurrency: currencyType,
-      }))
+      }));
     }
     if (this.state.cart !== cart ) {
       this.setState((prevState) => ({
         ...prevState,
-        cart:cart
-      }))
+        cart
+      }));
     }
   }
 
@@ -214,7 +214,7 @@ export default graphql(getDescription, {
   options: (props) => {
     return {
       variables: {
-        id: props.product_id
+        id: props.productId
       },
       // nextFetchPolicy: 'no-cache'
     }

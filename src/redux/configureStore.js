@@ -12,7 +12,7 @@ import navigationReducer from './navigation/reducers';
 const persistConfig = {
   key: 'root',
   storage,
-  whitelist: ['cartReducer'],
+  whitelist: ['cartReducer', 'navigationReducer', 'currencyReducer'],
 };
 
 const reducer = combineReducers({
