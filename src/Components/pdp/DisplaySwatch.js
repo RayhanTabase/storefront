@@ -1,12 +1,6 @@
 import React, { Component} from 'react';
 
 class DisplaySwatch extends Component {
-  constructor(props){
-    super(props)  
-    this.state={
-      selectedImage : '',
-    };
-  };
 
   displayList = () => {
     return this.props.attribute.items.map((item) =>{

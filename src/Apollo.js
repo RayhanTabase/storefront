@@ -4,12 +4,18 @@ import {
   gql,
 } from "@apollo/client";
 
-const client = new ApolloClient({
-  uri: 'http://localhost:4000/',
-  cache: new InMemoryCache()
+const cache = new InMemoryCache({
+  typePolicies: {
+    AttributeSet: {
+      keyFields: ['id','items'],
+    },
+  },
 });
 
-// use redux to record id of items added to cart and also the quantity
+const client = new ApolloClient({
+  uri: 'http://localhost:4000/',
+  cache: cache
+});
 
 export const getCurrencies = gql`
 { 
@@ -34,8 +40,18 @@ export const getProducts = gql`
         name,
         inStock,
         gallery,
+        attributes {
+          id,
+          name,
+          type,
+          items {
+            displayValue,
+            value,
+            id
+          }
+        },
         prices{
-          currency{
+          currency {
             label,
             symbol
           },
@@ -55,7 +71,7 @@ query ($id: String!){
     gallery,
     description,
     category,
-    attributes{
+    attributes {
       id,
       name,
       type,
@@ -66,7 +82,7 @@ query ($id: String!){
       }
     },
     prices {
-      currency{
+      currency {
         label,
         symbol
       },
@@ -84,7 +100,7 @@ query ($id: String!){
     brand,
     inStock,
     gallery,
-    attributes{
+    attributes {
       id,
       name,
       type,
@@ -95,7 +111,7 @@ query ($id: String!){
       }
     },
     prices {
-      currency{
+      currency {
         label,
         symbol
       },

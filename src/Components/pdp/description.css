@@ -39,7 +39,7 @@
 }
 
 .product-description .product-details .product-brand {
-  font-family: 'Raleway';
+  font-family: 'Raleway', sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 30px;
@@ -48,65 +48,12 @@
 }
 
 .product-description .product-details .product-name{
-  font-family: 'Raleway';
+  font-family: 'Raleway', sans-serif;
   font-style: normal;
   font-weight: 400;
   font-size: 30px;
   line-height: 27px;
   margin-bottom: 2.688rem;
-}
-
-.product-description .product-details .product-attributes {
-  margin-bottom: 2.5rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-}
-
-.product-description .product-details .product-attributes .product-attribute-title {
-  font-family: 'Roboto Condensed';
-  font-style: normal;
-  font-weight: 700;
-  font-size: 18px;
-  line-height: 18px;
-  margin-bottom: 0.5rem;
-}
-
-.product-description .product-details .product-attributes .product-attribute-section {
-  gap: 0.75rem;
-}
-
-.product-description .product-details .product-attributes .product-attribute-section .attribute-value-text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 3.938rem;
-  height: 2.813rem;
-  border: 1px solid #1D1F22;
-  box-sizing: border-box;
-  font-family: 'Source Sans Pro';
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 18px;
-  background: #fff;
-}
-
-.product-description .product-details .product-attributes .product-attribute-section .attribute-selected-text {
-  background: #1D1F22;
-  color: #fff;
-}
-
-.product-description .product-details .product-attributes .product-attribute-section .attribute-value-color {
-  width: 3.938rem;
-  height: 2.813rem;
-  opacity: 0.5;
-  border: 1px solid rgb(189, 189, 189);
-}
-
-.product-description .product-details .product-attributes .product-attribute-section .attribute-selected-color {
-  opacity: 1;
-  border: 3px ridge rgba(94, 206, 123, 1);
 }
 
 .product-description .product-details .product-price {
@@ -118,7 +65,7 @@
 }
 
 .product-description .product-details .product-price .text {
-  font-family: 'Roboto Condensed';
+  font-family: 'Roboto Condensed', sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 18px;
@@ -126,7 +73,7 @@
 }
 
 .product-description .product-details .product-price .amount {
-  font-family: 'Raleway';
+  font-family: 'Raleway', sans-serif;
   font-style: normal;
   font-weight: 700;
   font-size: 24px;
@@ -139,7 +86,7 @@
 .product-description .product-details .add-toCart-btn {
   width: 18.25rem;
   height: 3.25rem;
-  font-family: 'Raleway';
+  font-family: 'Raleway', sans-serif;
   font-style: normal;
   font-weight: 600;
   font-size: 16px;

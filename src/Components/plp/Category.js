@@ -3,31 +3,21 @@ import { graphql } from '@apollo/client/react/hoc';
 import './category_page.css';
 import ProductsIndex from './ProductsIndex';
 import { getCategories } from '../../Apollo';
+import store from '../../redux/configureStore';
 
 
 class Category extends Component {
-  constructor(props){
-    super(props)  
-    this.state={
-      categoryName: ''
-    };
-  };
-
-  useCategory = () => {
-    if (this.props.categoryName !== '') return this.props.categoryName;
-    var data = this.props.data;
-    if (data.loading) return '';
-    return data.categories[0].name;
-  }
 
   render() {
+    const { categoryReducer } = store.getState();
+    const { categoryName } = categoryReducer;
     return (
       <div className="plp-content">
         <h2 className="page-header">
-          {this.useCategory()}
+          {categoryName}
         </h2>
         <ProductsIndex
-          categoryName={this.useCategory()}
+          categoryName={categoryName}
         />
       </div>
     )

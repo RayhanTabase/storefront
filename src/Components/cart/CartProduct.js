@@ -14,28 +14,31 @@ class CartProduct extends Component {
       selectedAttributes: {},
       imageSourceNumber:0
     };
-  };
+  }
 
   getTotalPrice = () => {
     const data = this.props.data;
     if (data.loading) return 0;
-    const product = data.product
+    const product = data.product;
     if (!product.inStock) return 0;
+    const { currencyReducer } = store.getState();
+    const { currencyType:selectedCurrency } = currencyReducer;
     let price = product.prices[0];
-    if (this.props.selectedCurrency) {
-      price = product.prices.find((price) => (price.currency.label === this.props.selectedCurrency.label));
+    if (selectedCurrency) {
+      price = product.prices.find((price) => (price.currency.label === selectedCurrency.label));
     }
     const total = price.amount * this.props.product.quantity;
-    return total.toFixed(2)
+    return total.toFixed(2);
   }
 
   updateTotal = () => {
     const newTotal = this.getTotalPrice();
+    if (newTotal === this.state.total) return;
     this.props.addToTotal(JSON.stringify(this.props.product.attributes) + `${this.props.product.id}` ,newTotal);
     this.setState((prevState) => ({
       ...prevState,
       total: newTotal
-    }))
+    }));
   }
 
   componentDidMount = () => {
@@ -46,8 +49,7 @@ class CartProduct extends Component {
     this.props.removeFromCart(JSON.stringify(this.props.product.attributes) + `${this.props.product.id}`);
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
-    if (prevState.total === this.state.total && JSON.stringify(prevProps.selectedCurrency) === JSON.stringify(this.props.selectedCurrency)) return;
+  componentDidUpdate = () => {
     this.updateTotal();
   }
 
@@ -57,52 +59,54 @@ class CartProduct extends Component {
 
   reduceQuantity = () => {
     if (this.props.product.quantity - 1 < 1) {
-      store.dispatch(remove_from_cart({id: this.props.product.id, attributes: this.props.product.attributes, quantity: this.props.product.quantity}))
-    };
-    store.dispatch(decrease_quantity({id: this.props.product.id, attributes: this.props.product.attributes, quantity: this.props.product.quantity}));
+      if (window.confirm('Are you sure you want to delete item from cart?')) {
+        store.dispatch(remove_from_cart({id: this.props.product.id, attributes: this.props.product.attributes, quantity: this.props.product.quantity}));
+      }
+    } else {
+      store.dispatch(decrease_quantity({id: this.props.product.id, attributes: this.props.product.attributes, quantity: this.props.product.quantity}));
+    }
   }
 
   changeImage = (num) => {
     const data = this.props.data;
     if (data.loading) return '';
-    const images = data.product.gallery
+    const images = data.product.gallery;
     let nextImageNumber = this.state.imageSourceNumber + num;
     if (nextImageNumber >= images.length) {
       this.setState((prevState) => ({
         ...prevState,
         imageSourceNumber: 0
-      }))
+      }));
     }
-
     else if (nextImageNumber < 0) {
       this.setState((prevState) => ({
         ...prevState,
         imageSourceNumber: images.length - 1
-      }))
+      }));
     }
-
     else {
       this.setState((prevState) => ({
         ...prevState,
         imageSourceNumber: nextImageNumber
-      }))
+      }));
     }
   }
 
   displayProduct = () => {
     const data = this.props.data;
     if (data.loading) return '';
-    const product = data.product
-    
+    const product = data.product;
+    const { currencyReducer } = store.getState();
+    const { currencyType:selectedCurrency } = currencyReducer;
     let price = product.prices[0];
-    if (this.props.selectedCurrency) {
-      price = product.prices.find((price) => (price.currency.label === this.props.selectedCurrency.label));
+    if (selectedCurrency) {
+      price = product.prices.find((price) => (price.currency.label === selectedCurrency.label));
     }
-    const brand = product.brand;
-    const name = product.name;
-    const imageSource = product.gallery[this.state.imageSourceNumber];
-    const attributes = product.attributes;
+    const { name, brand, gallery, attributes, inStock } = product;
+    const imageSource = gallery[this.state.imageSourceNumber];
     const selectedAttributes = this.props.product.attributes;
+    const { quantity } = this.props.product;
+
     return (
       <div className="cart-product-card">
         <div className="section1">
@@ -112,7 +116,7 @@ class CartProduct extends Component {
           <p className="name">
             {name}
           </p>
-          <p className="price">
+          <p className={`price ${!inStock && 'strikeThroughText'}`}>
             <span className="symbol">
               {price.currency.symbol}
             </span>
@@ -153,7 +157,7 @@ class CartProduct extends Component {
               +
             </button>
             <p className="text">
-              {this.props.product.quantity}
+              { quantity }
             </p>
             <button
               type="button"
@@ -162,16 +166,16 @@ class CartProduct extends Component {
               –
             </button>
           </div>
-          <div className={`${!product.inStock && 'fade-content'} product-image`}>
+          <div className={`${!inStock && 'fade-content'} product-image`}>
             {
-              !product.inStock && 
+              !inStock && 
               <div className="product-outOfStock"> 
                 <p>
                   out of stock
                 </p>
               </div>
             }
-            <img src={imageSource} alt={name} />
+            <img src={imageSource} alt={name} loading="lazy" />
             <div className="changeImageBtns">
               <button
                 type="button"
@@ -207,7 +211,7 @@ export default graphql(getItem, {
     return {
       variables: {
         id: props.product.id
-      }
+      },
     }
   }
 })(CartProduct);

@@ -124,6 +124,7 @@ header .actions .shopping-cart .cart-items-number {
   align-items: center;
   background: #fff;
   box-shadow: 0 3px 3px 3px #f6f6f7 ;
+  z-index: 500;
 }
 
 .currency-option-display {
@@ -137,8 +138,9 @@ header .actions .shopping-cart .cart-items-number {
   align-items: center;
   gap: 0.5rem;
   font-size: 1.2rem;
+  z-index: 500;
 }
 
 .currency-option-display:hover {
-  background: #eeeeee;
+  background: #eee;
 }
