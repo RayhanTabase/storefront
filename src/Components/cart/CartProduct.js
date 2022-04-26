@@ -175,7 +175,7 @@ class CartProduct extends Component {
                 </p>
               </div>
             }
-            <img src={imageSource} alt={name} />
+            <img src={imageSource} alt={name} loading="lazy" />
             <div className="changeImageBtns">
               <button
                 type="button"

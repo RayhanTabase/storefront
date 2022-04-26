@@ -86,14 +86,14 @@ class Description extends Component {
                   type="button"
                   onClick={() =>  this.changeSelectedImage(imageSource)}
                 >
-                  <img src={imageSource} alt={product.name}/>
+                  <img src={imageSource} alt={product.name} loading="lazy" />
                 </button>
               )
             })
           }
         </div>
         <div className="product-image">          
-          <img src={this.state.selectedImage ? this.state.selectedImage: product.gallery[0]} alt={product.name} />
+          <img src={this.state.selectedImage ? this.state.selectedImage: product.gallery[0]} alt={product.name} loading="lazy" />
         </div>
         <div className="product-details"> 
           <p className="product-brand">

@@ -27,9 +27,7 @@
 }
 
 .plp-content .category-products .product-card:hover {
-  /* transform: scale(1.1); */
-  box-shadow: 0 4px 35px rgba(168, 172, 176, 0.19);
-  /* transition: 1s; */
+  box-shadow: 0 4px 35px rgba(168, 172, 176, 0.349);
 }
 
 .plp-content .category-products .product-card .product-image {

@@ -156,14 +156,14 @@ class ProductCard extends Component {
             className="btn-colorless"
             onClick={this.triggerAttributesPopUp}
           >
-            <img src={addToCartIcon} alt="add to cart"/>
+            <img src={addToCartIcon} alt="add to cart" loading="lazy" />
           </button>
         </div>
         <NavLink
           to = {`/description/`}
           onClick={this.changeProductPage}
         >        
-          <img src={imageSource} alt={name} className="product-image" />
+          <img src={imageSource} alt={name} className="product-image" loading="lazy" />
           <p className="product-name">
             {name}
           </p>
