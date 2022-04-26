@@ -4,34 +4,10 @@ import './cart.css';
 import CartContent from './CartContent';
 
 class Cart extends Component {
-  constructor(props){
-    super(props)
-    this.state={
-      cart: [],
-    };
-  }
-
-  componentDidMount = () => {
-    const { cartReducer } = store.getState();
-    const { cart } = cartReducer;
-    this.setState((prevState) => ({
-      ...prevState,
-      cart
-    }));
-  }
-
-  componentDidUpdate = () => {
-    const { cartReducer } = store.getState();
-    const { cart } = cartReducer;
-    if (JSON.stringify(cart) === JSON.stringify(this.state.cart)) return;
-    this.setState((prevState) => ({
-      ...prevState,
-      cart,
-    }));
-  }
 
   render() {
-    const { cart } = this.state;
+    const { cartReducer } = store.getState();
+    const { cart } = cartReducer;
     const { page } = this.props;
 
     if (cart.length < 1) {
@@ -44,7 +20,7 @@ class Cart extends Component {
       )
     }else {
       return (
-        <CartContent cart={cart} page={page} />
+        <CartContent page={page} />
       )
     }
   }

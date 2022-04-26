@@ -4,42 +4,16 @@ import { show_minicart } from '../../redux/navigation/actions';
 import emptyCart from '../../assets/empty_cart.svg';
 import Cart from './Cart';
 import './mini_cart.css';
-import MiniCartContainer from './MiniCartContainer';
 
 class CartButton extends Component {
-  constructor(props){
-    super(props)
-    this.state = {
-      showMiniCart: false
-    };
-  }
-
-  componentDidMount = () => {
-    const { navigationReducer } = store.getState();
-    const { showMiniCart } = navigationReducer;
-    this.setState((prevState) => ({
-      ...prevState,
-      showMiniCart,
-    }));
-  }
-
-  componentDidUpdate = () => {
-    const { navigationReducer } = store.getState();
-    const { showMiniCart } = navigationReducer;
-    if (this.state.showMiniCart !== showMiniCart) {
-      this.setState((prevState) => ({
-        ...prevState,
-        showMiniCart,
-      }));
-    }
-  }
-
+  
   showMiniCart = () => {
     store.dispatch(show_minicart());
   }
 
   render() {
-    const { showMiniCart } = this.state;
+    const { navigationReducer } = store.getState();
+    const { showMiniCart } = navigationReducer;
     return (
       <>
         <button
@@ -51,9 +25,9 @@ class CartButton extends Component {
         </button>
         {
           showMiniCart &&
-          <MiniCartContainer>
-            <Cart page="mini" />
-          </MiniCartContainer>
+            <div className="display-mini-cart">
+              <Cart page="mini" />
+            </div>
         }
       </>
     )

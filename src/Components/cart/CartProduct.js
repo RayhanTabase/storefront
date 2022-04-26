@@ -21,9 +21,11 @@ class CartProduct extends Component {
     if (data.loading) return 0;
     const product = data.product;
     if (!product.inStock) return 0;
+    const { currencyReducer } = store.getState();
+    const { currencyType:selectedCurrency } = currencyReducer;
     let price = product.prices[0];
-    if (this.props.selectedCurrency) {
-      price = product.prices.find((price) => (price.currency.label === this.props.selectedCurrency.label));
+    if (selectedCurrency) {
+      price = product.prices.find((price) => (price.currency.label === selectedCurrency.label));
     }
     const total = price.amount * this.props.product.quantity;
     return total.toFixed(2);
@@ -31,6 +33,7 @@ class CartProduct extends Component {
 
   updateTotal = () => {
     const newTotal = this.getTotalPrice();
+    if (newTotal === this.state.total) return;
     this.props.addToTotal(JSON.stringify(this.props.product.attributes) + `${this.props.product.id}` ,newTotal);
     this.setState((prevState) => ({
       ...prevState,
@@ -46,9 +49,7 @@ class CartProduct extends Component {
     this.props.removeFromCart(JSON.stringify(this.props.product.attributes) + `${this.props.product.id}`);
   }
 
-  componentDidUpdate = (prevProps, prevState) => {
-    if (prevProps.data.loading !== this.props.data.loading) this.updateTotal();
-    if (prevState.total === this.state.total && JSON.stringify(prevProps.selectedCurrency) === JSON.stringify(this.props.selectedCurrency)) return;
+  componentDidUpdate = () => {
     this.updateTotal();
   }
 
@@ -95,13 +96,17 @@ class CartProduct extends Component {
     const data = this.props.data;
     if (data.loading) return '';
     const product = data.product;
+    const { currencyReducer } = store.getState();
+    const { currencyType:selectedCurrency } = currencyReducer;
     let price = product.prices[0];
-    if (this.props.selectedCurrency) {
-      price = product.prices.find((price) => (price.currency.label === this.props.selectedCurrency.label));
+    if (selectedCurrency) {
+      price = product.prices.find((price) => (price.currency.label === selectedCurrency.label));
     }
     const { name, brand, gallery, attributes, inStock } = product;
     const imageSource = gallery[this.state.imageSourceNumber];
     const selectedAttributes = this.props.product.attributes;
+    const { quantity } = this.props.product;
+
     return (
       <div className="cart-product-card">
         <div className="section1">
@@ -152,7 +157,7 @@ class CartProduct extends Component {
               +
             </button>
             <p className="text">
-              { this.props.product.quantity }
+              { quantity }
             </p>
             <button
               type="button"
@@ -207,7 +212,6 @@ export default graphql(getItem, {
       variables: {
         id: props.product.id
       },
-      // nextFetchPolicy: 'no-cache'
     }
   }
 })(CartProduct);

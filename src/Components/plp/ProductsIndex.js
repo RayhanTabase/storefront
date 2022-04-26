@@ -9,10 +9,7 @@ class ProductsIndex extends Component {
     super(props)
     this.state={
       displayNumber:6,
-      products: [],
-      selectedCurrency: null,
       pageNumber: 1,
-      cart: []
     };
   };
 
@@ -34,7 +31,9 @@ class ProductsIndex extends Component {
     if (data.loading) return;
     if (!data.category) return;
     const { products } = data.category;
-    const { pageNumber, displayNumber, cart, selectedCurrency} = this.state;
+    const { pageNumber, displayNumber } = this.state;
+    const { cartReducer } = store.getState();
+    const { cart } = cartReducer;
     const pagProducts = products.slice((pageNumber - 1) * displayNumber, pageNumber * displayNumber);
     return pagProducts.map((product) => {
       const productInCart = cart.find((cartProduct) => cartProduct.id === product.id );
@@ -43,47 +42,10 @@ class ProductsIndex extends Component {
         <ProductCard
           key={product.id}
           product={product}
-          selectedCurrency={selectedCurrency}
           isInCart={isInCart}
         />
       )
     });
-  }
-
-  componentDidMount = () => {
-    const { currencyReducer, cartReducer } = store.getState();
-    const { currencyType } = currencyReducer;
-    const { cart } = cartReducer;
-    this.setState((prevState) => ({
-      ...prevState,
-      selectedCurrency: currencyType,
-      cart
-    }));
-  }
-
-  componentDidUpdate = (prevProps) => {
-    const isSameCategory = prevProps.categoryName === this.props.categoryName;
-    if(isSameCategory === false) {
-      this.setState((prevState) => ({
-        ...prevState,
-        pageNumber: 1
-      }));
-    }
-    const { currencyReducer, cartReducer } = store.getState();
-    const { currencyType } = currencyReducer;
-    const { cart } = cartReducer;
-    if (this.state.selectedCurrency !== currencyType) {
-      this.setState((prevState) => ({
-        ...prevState,
-        selectedCurrency: currencyType,
-      }));
-    }
-    if (this.state.cart !== cart ) {
-      this.setState((prevState) => ({
-        ...prevState,
-        cart
-      }));
-    }
   }
 
   render() {

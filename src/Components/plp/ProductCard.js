@@ -17,7 +17,6 @@ class ProductCard extends Component {
     };
   }
 
-
   addAttribute = (id, value) => {
     this.setState((prevState) => ({
       ...prevState,
@@ -135,8 +134,10 @@ class ProductCard extends Component {
   displayProduct = () =>{
     const { name, prices, gallery, inStock } = this.props.product;
     let price = prices[0];
-    if (this.props.selectedCurrency) {
-      price = prices.find((price) => (price.currency.label === this.props.selectedCurrency.label));
+    const { currencyReducer } = store.getState();
+    const { currencyType:selectedCurrency } = currencyReducer;
+    if (selectedCurrency) {
+      price = prices.find((price) => (price.currency.label === selectedCurrency.label));
     }
     const imageSource = gallery[0];
     return (

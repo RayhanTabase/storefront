@@ -40,41 +40,21 @@ class CartPage extends Component {
 
   getCartTotalQuantity = () => {
     let count = 0;
-    const { cart } = this.props;
+    const { cartReducer } = store.getState();
+    const { cart } = cartReducer;
     cart.forEach((product) => {
       count += product.quantity;
     });
     return count;
   }
 
-  componentDidMount = () => {
-    store.subscribe(() => {
-      const { currencyReducer } = store.getState();
-      const { currencyType } = currencyReducer;
-      this.setState((prevState) => ({
-        ...prevState,
-        selectedCurrency: currencyType,
-      }));
-    });
-  }
-
-  componentDidUpdate = (prevProps, prevState) => {
-    const { currencyReducer } = store.getState();
-    const { currencyType } = currencyReducer;
-    if (JSON.stringify(prevState.selectedCurrency) === JSON.stringify(currencyType)) return;
-    this.setState((prevState) => ({
-      ...prevState,
-      selectedCurrency: currencyType,
-    }));
-  }
-
   displayCartProducts = () => {
-    const { cart } = this.props;
+    const { cartReducer } = store.getState();
+    const { cart } = cartReducer;
     return cart.map((product) => 
       <CartProduct
         key={`${product.id} ${JSON.stringify(product)}`}
         product={product}
-        selectedCurrency={this.state.selectedCurrency}
         addToTotal={this.addToTotal}
         removeFromCart={this.removeFromCart}
       />
@@ -83,7 +63,9 @@ class CartPage extends Component {
  
   render() {
     const { page } = this.props;
-    const { selectedCurrency } = this.state;
+    const { currencyReducer } = store.getState();
+    const { currencyType:selectedCurrency } = currencyReducer;
+
     return (
       <>
         {

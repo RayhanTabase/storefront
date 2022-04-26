@@ -13,8 +13,6 @@ class Description extends Component {
     this.state={
       selectedImage : null,
       selectedAttributes: {},
-      selectedCurrency: null,
-      cart : []
     };
   }
 
@@ -53,7 +51,9 @@ class Description extends Component {
     const data = this.props.data;
     if (data.loading) return;
     const productId = data.product.id;
-    let item = this.state.cart.find((item) => JSON.stringify(item.attributes) === JSON.stringify(this.state.selectedAttributes) && item.id === this.props.productId);
+    const { cartReducer } = store.getState();
+    const { cart } = cartReducer;
+    let item = cart.find((item) => JSON.stringify(item.attributes) === JSON.stringify(this.state.selectedAttributes) && item.id === this.props.productId);
     if (item !== undefined) {
       // already in cart message
       alert('This item is already in the cart');
@@ -68,9 +68,11 @@ class Description extends Component {
     const data = this.props.data;
     if (data.loading) return '';
     const product = data.product;
+    const { currencyReducer } = store.getState();
+    const { currencyType:selectedCurrency } = currencyReducer;
     let price = product.prices[0];
-    if (this.state.selectedCurrency !== null) {
-      price = product.prices.find((price) => (price.currency.label === this.state.selectedCurrency.label));
+    if (selectedCurrency !== null) {
+      price = product.prices.find((price) => (price.currency.label === selectedCurrency.label));
     }
     return (
       <>
@@ -155,52 +157,6 @@ class Description extends Component {
     )
   }
 
-  componentDidMount = () => {
-    store.subscribe(() => {
-      const { currencyReducer, cartReducer } = store.getState();
-      const { currencyType } = currencyReducer;
-      const { cart } = cartReducer;
-      this.setState((prevState) => ({
-        ...prevState,
-        selectedCurrency: currencyType,
-        cart
-      }));
-    });
-    const { currencyReducer, cartReducer } = store.getState();
-    const { currencyType } = currencyReducer;
-    const { cart } = cartReducer;
-    if (this.state.selectedCurrency !== currencyType) {
-      this.setState((prevState) => ({
-        ...prevState,
-        selectedCurrency: currencyType,
-      }));
-    }
-    if (this.state.cart !== cart ) {
-      this.setState((prevState) => ({
-        ...prevState,
-        cart
-      }));
-    }
-  }
-
-  componentDidUpdate = () => {
-    const { currencyReducer, cartReducer } = store.getState();
-    const { currencyType } = currencyReducer;
-    const { cart } = cartReducer;
-    if (this.state.selectedCurrency !== currencyType) {
-      this.setState((prevState) => ({
-        ...prevState,
-        selectedCurrency: currencyType,
-      }));
-    }
-    if (this.state.cart !== cart ) {
-      this.setState((prevState) => ({
-        ...prevState,
-        cart
-      }));
-    }
-  }
-
   render() {
     return (
       <div className="product-description d-flex">
@@ -211,12 +167,13 @@ class Description extends Component {
 }
 
 export default graphql(getDescription, {
-  options: (props) => {
+  options: () => {
+    const { navigationReducer } = store.getState();
+    const { productId } = navigationReducer;
     return {
       variables: {
-        id: props.productId
+        id: productId
       },
-      // nextFetchPolicy: 'no-cache'
     }
   }
 })(Description);

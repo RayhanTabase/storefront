@@ -9,7 +9,6 @@ class NavLinks extends Component {
   constructor(props){
     super(props)  
     this.state={
-      selectedCategory : '',
       categories:[],
     };
   }
@@ -18,7 +17,9 @@ class NavLinks extends Component {
     const data = this.props.data;
     if (data.loading) return;
     if (data.categories.length === this.state.categories.length) return;
-    if (this.state.selectedCategory === '') {
+    const { categoryReducer } = store.getState();
+    const { categoryName } = categoryReducer;
+    if (categoryName === '') {
       store.dispatch(change_category_type(data.categories[0].name));
     };
     this.setState((prevState) => ({
@@ -29,25 +30,16 @@ class NavLinks extends Component {
 
   displayNavLinks = () => {
     if (this.state.categories.length < 1) return '';
+    const { categoryReducer } = store.getState();
+    const { categoryName } = categoryReducer;
     return this.state.categories.map((category) => (
       <CategoryLink
         key={category.name}
-        selectedCategory={this.state.selectedCategory}
+        selectedCategory={categoryName}
         category={category}
       />
     ));
   };
-
-  componentDidMount = () => {
-    store.subscribe(() => {
-      const { categoryReducer } = store.getState();
-      const { categoryName } = categoryReducer;
-      this.setState((prevState) => ({
-        ...prevState,
-        selectedCategory: categoryName,
-      }));
-    });
-  }
 
   componentDidUpdate = () => {
     this.loadCategories();

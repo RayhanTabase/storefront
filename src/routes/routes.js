@@ -7,38 +7,21 @@ import Description from '../Components/PDP/Description';
 import Cart from '../Components/Cart/Cart';
 
 class AppRoutes extends Component {
-  constructor(props){
-    super(props)  
-    this.state={
-      productId: '',
-      categoryName: '',
-    };
-  }
-
-  componentDidMount = () => {
-    store.subscribe(() => {
-      const { navigationReducer, categoryReducer } = store.getState();
-      const { productId } = navigationReducer;
-      const { categoryName } = categoryReducer;
-      this.setState((prevState) => ({
-        ...prevState,
-        productId,
-        categoryName,
-      }));
-    });
-  }
 
   render() {
+    const { navigationReducer } = store.getState();
+    const { productId } = navigationReducer;
+
     return (
       <Suspense>
         <Routes>
-          <Route path="/" element={<Category categoryName={this.state.categoryName} />} />
+          <Route path="/" element={<Category />} />
           {
-            this.state.productId !== '' &&
-            <Route exact path="/description" element={<Description productId={this.state.productId} />} />
+            productId !== '' &&
+            <Route exact path="/description" element={<Description />} />
           }
           <Route path="/cart" element={<Cart page="full" />} />
-          <Route path="/*" element={<Category categoryName={this.state.categoryName} />} />
+          <Route path="/*" element={<Category />} />
         </Routes>
       </Suspense>
     )
