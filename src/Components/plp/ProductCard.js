@@ -30,12 +30,11 @@ class ProductCard extends Component {
 
   showAttributesPopUp = () => {
     if (this.state.showAttributesPopUp === false) return;
-    const { attributes, name } = this.props.product;
+    const { attributes } = this.props.product;
     return (
       <div className="full-screen-popup">
         <div className="pop-up-card">
-          <p>{name}</p>
-          <p>Please specify attributes</p>
+          <p className="message">Please specify attributes</p>
           <div className="product-attributes">
             {attributes.map((attribute) => {
               if (attribute.type === "text") {
@@ -62,14 +61,16 @@ class ProductCard extends Component {
             })}
           </div>
 
-          <div className="d-flex">
+          <div className="d-flex action-btns">
             <button
+              className="add-btn"
               onClick={this.addToCart}
             >
               Add
             </button>
 
             <button
+              className="cancel-btn"
               onClick={this.closeAttributesPopUp}
             >
               Cancel
@@ -139,7 +140,7 @@ class ProductCard extends Component {
     }
     const imageSource = gallery[0];
     return (
-        <div className={`product-card  ${!inStock && 'fade-content'} ${this.props.isInCart && 'card-shadow'}`}>
+        <div className={`product-card  ${!inStock && 'fade-content'}`}>
         {
           !inStock && 
           <div className="product-outOfStock"> 

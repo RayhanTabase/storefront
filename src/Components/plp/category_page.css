@@ -26,13 +26,10 @@
   box-sizing: border-box;
 }
 
-.plp-content .category-products .card-shadow {
-  box-shadow: 0 4px 35px rgba(168, 172, 176, 0.19);
-}
-
 .plp-content .category-products .product-card:hover {
-  transform: scale(1.1);
-  transition: 1s;
+  /* transform: scale(1.1); */
+  box-shadow: 0 4px 35px rgba(168, 172, 176, 0.19);
+  /* transition: 1s; */
 }
 
 .plp-content .category-products .product-card .product-image {
@@ -86,4 +83,55 @@
 .pagnition {
   display: flex;
   gap: 0.5rem;
+}
+
+.pop-up-card {
+  background: #fff;
+  box-shadow: 0 4px 35px rgba(168, 172, 176, 0.19);
+  padding: 2rem;
+}
+
+.pop-up-card .message {
+  font-family: 'Raleway';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 160%;
+  margin-bottom: 1.5rem;
+}
+
+.pop-up-card .action-btns {
+  gap: 2rem;
+  justify-content: space-between;
+}
+
+.pop-up-card .action-btns button {
+  width: 8.75rem;
+  height: 2.688rem;
+  font-family: 'Raleway', sans-serif;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  color: #fff;
+  border: 0;
+}
+
+.pop-up-card .action-btns .add-btn {
+  background: rgba(94, 206, 123, 1);
+  color: #fff;
+}
+
+.pop-up-card .action-btns .add-btn:hover {
+  background: rgb(66, 158, 91);
+}
+
+.pop-up-card .action-btns .cancel-btn {
+  background: #fff;
+  border: 2px solid rgba(29, 31, 34, 1);
+  color: black;
+}
+
+.pop-up-card .action-btns .cancel-btn:hover {
+  background: #ededed;
 }
